@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.com.ezen.mapper.MemberMapper">
+<select id ="getTime2" resultType="string">
+SELECT SYSDATE FROM dual 
+</select>
+
+<insert id="memberInsert">
+INSERT INTO MEMBER VALUES(#{id}, #{name}, #{phone}, #{address})
+</insert>
+
+<update id="memberUpdate">
+UPDATE MEMBER SET name = #{name}, phone = #{phone}, address = #{address}
+</update>
+
+<delete id="memberDelete">
+DELETE FROM MEMBER WHERE id = #{id}
+</delete>
+
+<select id="selectOneMember" resultType="kr.com.ezen.dto.MemberVO">
+SELECT * FROM MEMBER WHERE id = #{id}
+</select>
+
+<select id="selectMemberList" resultType="kr.com.ezen.dto.MemberVO">
+SELECT * FROM MEMBER ORDER BY id DESC
+</select>
+</mapper>

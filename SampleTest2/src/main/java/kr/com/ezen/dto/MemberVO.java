@@ -1,6 +1,22 @@
 package kr.com.ezen.dto;
 
-public class MemberVO {
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-	private
+@Setter
+@Getter
+@ToString
+@Builder
+@AllArgsConstructor
+public class MemberVO {
+	
+	
+	private int id;
+	private String name;
+	private String phone;
+	private String address;
+
 }
