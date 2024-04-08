@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.com.mapper.BoardMapper">
+<insert id ="insertBoard">
+INSERT INTO BOARD VALUES(#{name}, #{title}, #{content})
+</insert>
+
+<select id="selectOneBoard" resultType="kr.com.dto.BoardDTO">
+SELECT * FROM BOARD WHERE NAME = #{name}
+</select>
+
+</mapper>
