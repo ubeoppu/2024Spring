@@ -30,6 +30,7 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<context:component-scan base-package="kr.com.service"></context:component-scan>
 
 	<mybatis-spring:scan base-package="kr.com.mapper" />
 

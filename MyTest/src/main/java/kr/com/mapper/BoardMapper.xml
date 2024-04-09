@@ -7,8 +7,22 @@
 INSERT INTO BOARD VALUES(#{name}, #{title}, #{content})
 </insert>
 
+<delete id="deleteBoard">
+DELETE FROM BOARD WHERE name = #{name}
+</delete>
+
+<update id="updateBoard">
+UPDATE BOARD SET title = #{title}, content = #{content} WHERE name = #{name}
+</update>
+
 <select id="selectOneBoard" resultType="kr.com.dto.BoardDTO">
 SELECT * FROM BOARD WHERE NAME = #{name}
 </select>
+
+<select id="selectBoardList" resultType="kr.com.dto.BoardDTO">
+SELECT * FROM BOARD
+</select>
+
+
 
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +26,7 @@ import org.zerock.domain.TodoDTO;
 import com.google.gson.Gson;
 
 import lombok.extern.log4j.Log4j;
-
+//@RestController == @Controller + @ResponseBody
 @Controller
 @RequestMapping("/sample/*")
 @Log4j
@@ -122,7 +123,7 @@ public class SampleController {
 	}
 	
 	@GetMapping("/ex06")
-	@ResponseBody 
+	@ResponseBody //java객체를 >> json으로 변환해서 전달
 	public SampleDTO ex06() {
 		SampleDTO sampleDTO = new SampleDTO();
 		
@@ -130,6 +131,15 @@ public class SampleController {
 		sampleDTO.setAge(22);
 		
 		return sampleDTO;
+	}
+	
+	@GetMapping("/ex066") //Json값을 java객체로 변환해서 dto전달
+	public String ex066(@RequestBody SampleDTO dto) {
+		log.info("-------ex066");
+		log.info(dto.getName());
+		log.info(dto.getAge());
+		
+		return "";
 	}
 	
 	@GetMapping("/ex07")

@@ -9,7 +9,7 @@
 <body>
 <h1>board01</h1>
 
-<form action ="/board/board01" method="post">
+<form action ="/board/board01insert" method="post">
 이름:<input type="text" name="name"><br>
 제목:<input type="text" name="title"><br>
 내용:<input type="text" name="content">
