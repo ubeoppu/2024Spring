@@ -12,35 +12,40 @@ import lombok.extern.log4j.Log4j;
 @Service
 @Log4j
 @RequiredArgsConstructor
-public class BoardServiceImpl implements BoardService {
+public class BoardServiceImpl implements BoardService{
 
-	//객체에 올라와있는 BoardMapper의 주소값을 사용
+	//@Autowired
 	private final BoardMapper boardMapper;
 	
 	@Override
 	public void register(BoardVO board) {
+		log.info("register............." + board);
 		boardMapper.insertSelectKey(board);
-		
 	}
 
 	@Override
 	public BoardVO get(Long bno) {
-		
+		log.info("get.........." + bno);
 		return boardMapper.read(bno);
 	}
 
 	@Override
 	public boolean modify(BoardVO board) {
-		return boardMapper.update(board);
+		log.info("modify....... " + board );
+		return boardMapper.update(board)  == 1;
 	}
 
 	@Override
 	public boolean remove(Long bno) {
-		return boardMapper.delete(bno);
+		log.info("remove....... " + bno );
+		
+		return boardMapper.delete(bno) == 1;
 	}
 
 	@Override
 	public List<BoardVO> getList() {
+		log.info("getList...........");
+		
 		return boardMapper.getList();
 	}
 

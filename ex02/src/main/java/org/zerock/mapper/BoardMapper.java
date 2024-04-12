@@ -13,8 +13,8 @@ public interface BoardMapper {
 	
 	public BoardVO read(Long bno);
 	
-	public boolean update(BoardVO boardVO);
+	public int update(BoardVO boardVO);
 	
-	public boolean delete(Long bno);
+	public int delete(Long bno);
 
 }
