@@ -19,7 +19,7 @@
                         <!-- /.panel-heading -->
                         <div class="panel-body">
                         <div class="form-group">
-                        <label>Bno</label>
+                        <label>Bno </label>
                         <input name="bno" class="form-control" value="${board.bno }" readonly="readonly">
                         </div>
                         <div class="form-group">
@@ -40,9 +40,10 @@
                         onclick="location.href='/board/modify?bno=${board.bno }'">Modify</button> --%>	
                         
                         <button data-oper='modify' class="btn btn-default" 
-                             onclick="location.href='/board/modify?bno=${board.bno}'">Modify</button>
+                             onclick="location.href='/board/modify?bno=${board.bno}&pageNum=${cri.pageNum }&amount=${cri.amount }'">Modify</button>
                         
-                        <button data-oper="list" class="btn btn-info">List</button>
+                        <button data-oper="list" class="btn btn-info"
+                        onclick="location.href='/board/list?bno=${board.bno}&pageNum=${cri.pageNum }&amount=${cri.amount }'">List</button>
                             <!-- /.table-responsive -->
                        
                         </div>
