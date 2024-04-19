@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.SampleVO;
 
+import com.google.gson.Gson;
+
 import lombok.extern.log4j.Log4j;
 
 @RestController // @Controller + @ResponseBody 값만 받음
@@ -62,6 +64,14 @@ public class SampleController {
 		  
 		  return map;
 	  }
+	  
+	  @GetMapping(value= "/getMap2", produces = MediaType.APPLICATION_JSON_VALUE)
+	  public Map<String, String> getMap2(){
+		  
+		  Map<String, String> map = Map.of("name :", "park", "age : ", "20");
+		  
+		  return map;
+	  }
 		
 	  @GetMapping(value ="/check", params = {"height", "weight"},
 			  produces = MediaType.APPLICATION_JSON_VALUE)
@@ -81,12 +91,19 @@ public class SampleController {
 	  //localhost:8181/product/조운/50
 	  
 	  @GetMapping(value = "/product/{name}/{age}", produces = MediaType.APPLICATION_JSON_VALUE)
-	  public String[]getPath(
+	  public String getPath(
 			  @PathVariable("name") String name, //조운
 			  @PathVariable("age") Integer age   //50
 			  ) {
 		  
-		  return new String[] {"name: " + name, "age : " + age};
+		  Map<String, Object>map = Map.of("name :" + name, "age :" + age);
+		  
+		  Gson gson = new Gson();
+		  String jsonStr = gson.toJson(map);
+		  
+		  log.info("===>" + jsonStr);
+		  
+		  return jsonStr;
 	  }
 	  
 	  @PostMapping(value = "/ticket", produces = MediaType.APPLICATION_JSON_VALUE)

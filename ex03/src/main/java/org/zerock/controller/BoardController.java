@@ -1,6 +1,6 @@
 package org.zerock.controller;
 
-import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +17,6 @@ import org.zerock.service.BoardService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 @Log4j
@@ -29,20 +28,38 @@ public class BoardController {
 	
 	
 	
+	/*
+	 * @GetMapping("/list") public void list(Criteria cri, Model model){
+	 * log.info("list........" + cri);
+	 * 
+	 * 
+	 * // model.addAttribute("pageMaker", new PageDTO(cri, 123));
+	 * 
+	 * int total = boardService.getTotal(cri);
+	 * 
+	 * log.info("total : " + total);
+	 * 
+	 * model.addAttribute("list", boardService.getList(cri)); //views/board/list.jsp
+	 * model.addAttribute("pageMaker", new PageDTO(cri, total)); }
+	 */
+	
 	@GetMapping("/list")
-	public void list(Criteria cri,  Model model){   
+	public Map<String,Object> list(Criteria cri,  Model model){   
 		log.info("list........" + cri);
 		
-		model.addAttribute("list", boardService.getList(cri));  //views/board/list.jsp
 		
 //		model.addAttribute("pageMaker", new PageDTO(cri, 123));
 		
 		int total = boardService.getTotal(cri);
-		
 		log.info("total : " + total);
 		
-		model.addAttribute("pageMaker", new PageDTO(cri, total));
+		//model.addAttribute("list", boardService.getList(cri));  //views/board/list.jsp
+		//model.addAttribute("pageMaker", new PageDTO(cri, total));
+		
+		return Map.of("list", boardService.getList(cri), "pageMaker", new PageDTO(cri, total));  //Map.of map값 초기화
 	}
+		
+	
 	
 	@GetMapping("/register")  //  WEB_INF/views/board/register.jsp
 	public void register() {

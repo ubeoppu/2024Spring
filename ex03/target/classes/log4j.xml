@@ -12,7 +12,8 @@
 	
 	<!-- Application Loggers -->
 	<logger name="org.zerock.controller">
-		<level value="info" />
+<!-- 		<level value="info" /> -->
+		<level value="warn" />
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
