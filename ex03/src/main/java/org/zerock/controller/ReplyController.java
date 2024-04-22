@@ -37,11 +37,33 @@ public class ReplyController {
 		
 		int insertCount = replyService.register(reply);
 		log.info(insertCount);
-		return insertCount == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) : 
+		return insertCount == 1 ? new ResponseEntity<String>("abd", HttpStatus.OK) : 
 			                      new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@GetMapping(value = "/{rno}", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
+	// function add(reply, callback){
+	// $.ajax({
+	//   type: "post"
+	//   url: "/new"
+	//   data:JSON.stringify(reply),
+	//   contentType: "application/json; charset=utf-8",
+	//   
+	//   success: function(result, status, xhr){
+	//   if(callback){
+	//      callback(result)
+	//    }
+	// },
+	//   error: function(xhr, status, er){
+	//       if(error){
+	//        error(er)
+	//    }
+	//})
+	//
+	//
+	//
+	// }
+	
+	@GetMapping(value = "/{rno}", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno")Long rno){
 		log.info("get..." + rno);
 		
@@ -59,18 +81,17 @@ public class ReplyController {
 				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);		
 	}
 	
-	//localhost:8181/reply/201 + {"reply" : "수정 내용이 와야 됨"}
-	@PutMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> update (@RequestParam("rno") Long rno, @RequestBody ReplyVO reply){
-		log.info("rno..." + rno);
-		log.info("reply..." + reply);
+	//localhost:8181/reply/13  +  { "reply": "수정내용이와야됨" }
+	@PutMapping(value = "/{rno}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	public ResponseEntity<String> update(@PathVariable("rno") Long rno, @RequestBody ReplyVO reply ){
+		log.info("rno........." + rno);
+		log.info("reply......" + reply);
 		
 		reply.setRno(rno);
 		
-		return replyService.modify(reply) == 1 ?
-				new ResponseEntity<String>("success", HttpStatus.OK) 
-			:   new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
-		
+		return replyService.modify(reply) == 1 ? 
+				new ResponseEntity<String>("success", HttpStatus.OK):
+				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	@GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
