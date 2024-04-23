@@ -106,33 +106,56 @@ var replyService = (function(){
 
     }//end get
 
-    function addd(reply, callback){
-        $.ajax({
-            type: "post",
-            url: "/new",
-            data: JSON.stringify(reply),
-            contentType: "application/json; charset=utf-8",
+    // function addd(reply, callback){
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/new",
+    //         data: JSON.stringify(reply),
+    //         contentType: "application/json; charset=utf-8",
             
-            success: function(result, status, xhr){
-                if(callback){
-                    callback(result)
-                }
-            },
+    //         success: function(result, status, xhr){
+    //             if(callback){
+    //                 callback(result)
+    //             }
+    //         },
 
-            error: function(xhr, status, er){
-                if(error){
-                    error(er)
-                }
-            }
-        })
-    }
-    function deletee(rno, callback){
-        $.ajax({
-            type:"delete",
-            url:"/reply/" + rno,
-            data: "application/json; charset=utf-8"
-        })
-    }
+    //         error: function(xhr, status, er){
+    //             if(error){
+    //                 error(er)
+    //             }
+    //         }
+    //     })
+    // }
+    // function deletee(rno, callback){
+    //     $.ajax({
+    //         type:"delete",
+    //         url:"/reply/" + rno,
+    //         data: JSON.stringify(rno),
+
+            
+    //     })
+    // }
+
+    // function ade(reply, callback){
+    //     $.ajax({
+    //         type:"post",
+    //         url: "/reply/new",
+    //         data: JSON.stringify(reply),
+    //         contentType: "application/json; charset= utf-8",
+
+    //         success: function(result, status, xhr){
+    //             if(callback){
+    //                 callback(result)
+    //             }
+    //         },
+    //             error: function(status,xhr,er){
+    //                 if(error){
+    //                     error(er)
+    //                 }
+
+    //             }
+    //     })
+    // }
 
     return{
         add: add,
