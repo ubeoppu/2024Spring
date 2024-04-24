@@ -22,9 +22,24 @@ DELETE FROM tbl_reply WHERE rno = #{rno}
 </delete>
 
 <select id="getListWishPaging" resultType="org.zerock.domain.ReplyVO">
-SELECT * FROM tbl_reply
-WHERE bno = #{bno}
-ORDER BY rno ASC
+  <![CDATA[
+	  	select rno, bno, reply, replyer, replydate, updatedate
+		from
+		(
+		    select  /*+ index(tbl_reply idx_reply) */
+		    rownum rn, rno, bno, reply, replyer, replydate, updatedate
+		    from tbl_reply
+		    where bno = #{bno} 
+		    and rno > 0 and 
+		    rownum <= #{cri.pageNum} * #{cri.amount}
+		        
+		)
+		where rn > (#{cri.pageNum} - 1) * #{cri.amount}  
+	]]>
+</select>
+
+<select id="getCountByBno" resultType="int">
+SELECT count(rno) FROM tbl_reply WHERE bno = #{bno}
 </select>
 
 </mapper>

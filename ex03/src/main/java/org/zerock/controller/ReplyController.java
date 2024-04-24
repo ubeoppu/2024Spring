@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zerock.domain.Criteria;
+import org.zerock.domain.ReplyPageDTO;
 import org.zerock.domain.ReplyVO;
 import org.zerock.service.ReplyService;
 
@@ -36,7 +37,7 @@ public class ReplyController {
 		
 		int insertCount = replyService.register(reply);
 		log.info(insertCount);
-		return insertCount == 1 ? new ResponseEntity<String>("abd", HttpStatus.OK) : 
+		return insertCount == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) : 
 			                      new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
@@ -71,13 +72,6 @@ public class ReplyController {
 		
 	}
 	
-	@GetMapping(value ="/get/{rno}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<ReplyVO>get1(@PathVariable("rno")Long rno){
-		ReplyVO vo = replyService.get(rno);
-		
-		return vo != null ? new ResponseEntity<ReplyVO>(vo, HttpStatus.OK)
-				: new ResponseEntity<ReplyVO>(HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 	
 	@DeleteMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> delete (@PathVariable("rno")Long rno){
@@ -102,40 +96,35 @@ public class ReplyController {
 				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping(value="/modify/{rno}", consumes = "application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String>update1(@PathVariable("rno")Long rno,@RequestBody ReplyVO reply){
-		
-		int successCount = replyService.modify(reply);
-		
-		return successCount == 1 ? new ResponseEntity<String>("success",HttpStatus.OK)
-				           :new ResponseEntity<String>("fail",HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 	
-	@GetMapping(value="/pages/{bno}/{page}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(
-		@PathVariable("bno")Long bno,
-		@PathVariable("page")int page
-        ){
-		
-		log.info("get List..." + bno + "," + page);
-		
-		Criteria cri = new Criteria(page, 10);
-		
-		List<ReplyVO> list = replyService.getList(cri, bno);
-		
-		return new ResponseEntity<List<ReplyVO>>(list, HttpStatus.OK);
-		
-	}
+	//localhost:8181/reply/pages/100/1 -->
+		@GetMapping(value ="/pages/{bno}/{page}" , produces = {MediaType.APPLICATION_JSON_VALUE})
+		public ResponseEntity<ReplyPageDTO> getList(
+				@PathVariable("bno") Long bno,
+				@PathVariable("page") int page
+				){
+			log.info("getList........." + bno + ", " + page);
+			
+			Criteria cri = new Criteria(page, 10);
+			
+			ReplyPageDTO result = replyService.getList(cri, bno);		
+			
+			return new ResponseEntity<>(result, HttpStatus.OK);
+			
+		}
 	
-	@GetMapping(value="/p/{bno}/{page}", produces= {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ReplyVO>>getPage(@PathVariable("bno")Long bno, @PathVariable("page")int page){
-		
-		Criteria cri = new Criteria(page, 10);
-	
-		List<ReplyVO> list= replyService.getList(cri, bno);
-		
-		return new ResponseEntity<List<ReplyVO>>(list, HttpStatus.OK);
-	} 
+	/*
+	 * @GetMapping(value="/p/{bno}/{page}", produces=
+	 * {MediaType.APPLICATION_JSON_VALUE}) public
+	 * ResponseEntity<ReplyPageDTO>getPage(@PathVariable("bno")Long
+	 * bno, @PathVariable("page")int page){
+	 * 
+	 * Criteria cri = new Criteria(page, 10);
+	 * 
+	 * ReplyPageDTO result= replyService.getList(cri, bno);
+	 * 
+	 * return new ResponseEntity<ReplyPageDTO>(result, HttpStatus.OK); }
+	 */
 	
 	
 	

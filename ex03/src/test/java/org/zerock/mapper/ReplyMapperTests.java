@@ -72,7 +72,11 @@ public class ReplyMapperTests {
 		
 		list.forEach(reply -> log.info(reply));
 		
-		
+	}
+	
+	@Test
+	public void getCountByBno() {
+		log.info(replyMapper.getCountByBno(2L));
 		
 	}
 
