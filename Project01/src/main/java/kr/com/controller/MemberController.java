@@ -28,6 +28,7 @@ public class MemberController {
 		return "/member/memberRegister";
 	}
 	
+	
 	@GetMapping("/test")
 	public void testPage() {
 		
@@ -43,12 +44,20 @@ public class MemberController {
 	public String registerMember(MemberVO vo, RedirectAttributes rttr) {
 		log.info("PostRegister");
 		
-		log.info(service.createMember(vo));
 		
 		rttr.addFlashAttribute("message", "회원가입을 환영합니다");
 		
 		return "redirect:/member/memberLogin";
 				
+	}
+	
+	@GetMapping("/registerEmail")
+	public String emailConfirm(MemberVO vo) throws Exception{
+		
+		service.updateMailAuth(vo);
+		
+		return "/member/emailAuthSuccess";
+		
 	}
 
 }

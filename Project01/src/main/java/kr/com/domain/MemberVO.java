@@ -40,5 +40,6 @@ public class MemberVO {
 	private String birth;
 	private Date regdate;
 	private Long verify;
+	private String mail_key;
 
 }

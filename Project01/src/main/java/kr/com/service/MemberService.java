@@ -1,12 +1,15 @@
 package kr.com.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.mail.MessagingException;
 
 import kr.com.domain.MemberVO;
 
 public interface MemberService {
 
-	public int createMember(MemberVO vo);
+	public void createMember(MemberVO vo)throws Exception;
 	public MemberVO getMember(String id);
 	public List<MemberVO> getMemberList();
 	public int updateMember(MemberVO vo);
