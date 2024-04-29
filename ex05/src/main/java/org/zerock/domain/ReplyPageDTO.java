@@ -9,9 +9,7 @@ import lombok.Getter;
 @Data
 @AllArgsConstructor
 @Getter
-
 public class ReplyPageDTO {
 	private int replyCnt;
 	private List<ReplyVO> list;
-
 }

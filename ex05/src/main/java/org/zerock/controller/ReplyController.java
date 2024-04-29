@@ -20,67 +20,48 @@ import org.zerock.service.ReplyService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import oracle.jdbc.proxy.annotation.Post;
 
 @RestController
-@RequestMapping("/reply/*")
+@RequestMapping("/reply/")
 @Log4j
 @RequiredArgsConstructor
 public class ReplyController {
-	
+
 	private final ReplyService replyService;
-								//웹페이지에서 spring으로 값을 받을 때 json 타입으로 받음
-	@PostMapping(value ="/new", consumes ="application/json",
-			//spring에서 웹페이지로 보내줄 때 plain 타입(일반 문자열)로 보내줌
+	
+	@PostMapping(value = "/new", consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> create(@RequestBody ReplyVO reply){
-		log.info("create ..." + reply);
+		
+		log.info("create......." + reply);
 		
 		int insertCount = replyService.register(reply);
-		log.info(insertCount);
+		
 		return insertCount == 1 ? new ResponseEntity<String>("success", HttpStatus.OK) : 
-			                      new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+								  new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	
-	// function add(reply, callback){
-	// $.ajax({
-	//   type: "post"
-	//   url: "/new"
-	//   data:JSON.stringify(reply),
-	//   contentType: "application/json; charset=utf-8",
-	//   
-	//   success: function(result, status, xhr){
-	//   if(callback){
-	//      callback(result)
-	//    }
-	// },
-	//   error: function(xhr, status, er){
-	//       if(error){
-	//        error(er)
-	//    }
-	//})
-	//
-	//
-	//
-	// }
-	
+	//localhost:8181/reply/207
 	@GetMapping(value = "/{rno}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<ReplyVO> get(@PathVariable("rno")Long rno){
-		log.info("get..." + rno);
+	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno){
 		
-		return new ResponseEntity<ReplyVO>(replyService.get(rno), HttpStatus.OK);
+		log.info("get........." + rno);
 		
+		ReplyVO vo = replyService.get(rno);
+		
+		return new ResponseEntity<ReplyVO>(vo, HttpStatus.OK);
 	}
-	
-	
+
+	//localhost:8181/reply/12
 	@DeleteMapping(value = "/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
-	public ResponseEntity<String> delete (@PathVariable("rno")Long rno){
+	public ResponseEntity<String> delete(@PathVariable("rno") Long rno){
 		
-		log.info("delete..." + rno);
+		log.info("delete........." + rno);
 		
-		return replyService.remove(rno) == 1
+		return  replyService.remove(rno) == 1
 				? new ResponseEntity<String>("success", HttpStatus.OK)
-				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);		
+				: new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
 	//localhost:8181/reply/13  +  { "reply": "수정내용이와야됨" }
@@ -96,37 +77,25 @@ public class ReplyController {
 				new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	
 	//localhost:8181/reply/pages/100/1 -->
-		@GetMapping(value ="/pages/{bno}/{page}" , produces = {MediaType.APPLICATION_JSON_VALUE})
-		public ResponseEntity<ReplyPageDTO> getList(
-				@PathVariable("bno") Long bno,
-				@PathVariable("page") int page
-				){
-			log.info("getList........." + bno + ", " + page);
-			
-			Criteria cri = new Criteria(page, 10);
-			
-			ReplyPageDTO result = replyService.getList(cri, bno);		
-			
-			return new ResponseEntity<>(result, HttpStatus.OK);
-			
-		}
-	
-	/*
-	 * @GetMapping(value="/p/{bno}/{page}", produces=
-	 * {MediaType.APPLICATION_JSON_VALUE}) public
-	 * ResponseEntity<ReplyPageDTO>getPage(@PathVariable("bno")Long
-	 * bno, @PathVariable("page")int page){
-	 * 
-	 * Criteria cri = new Criteria(page, 10);
-	 * 
-	 * ReplyPageDTO result= replyService.getList(cri, bno);
-	 * 
-	 * return new ResponseEntity<ReplyPageDTO>(result, HttpStatus.OK); }
-	 */
-	
-	
-	
-
+	@GetMapping(value ="/pages/{bno}/{page}" , produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<ReplyPageDTO> getList(
+			@PathVariable("bno") Long bno,
+			@PathVariable("page") int page
+			){
+		log.info("getList........." + bno + ", " + page);
+		
+		Criteria cri = new Criteria(page, 10);
+		
+		ReplyPageDTO result = replyService.getList(cri, bno);		
+		
+		return new ResponseEntity<>(result, HttpStatus.OK);
+		
+	}
 }
+
+
+
+
+
+

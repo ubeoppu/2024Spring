@@ -15,30 +15,30 @@ import lombok.extern.log4j.Log4j;
 @Component()
 public class LogAdvice implements Advice{
 
-	@Pointcut(" execution(* org.zerock.service.*Impl.*(..))")
+	@Pointcut(" execution(* org.zerock.service.*Impl.*(..)) ")
 	public void allPointCut() {};
-	
-	@Pointcut(" execution(* org.zerock.service.*Impl.modify*(..))")
+
+	@Pointcut(" execution(* org.zerock.service.*Impl.modify(..)) ")
 	public void modifyPointCut() {};
 	
 	@Around("modifyPointCut()")
-	public Object logAdvice(ProceedingJoinPoint pjp)throws Throwable {
-		log.info("Log Advice....");
+	public Object logAdvice(ProceedingJoinPoint pjp) throws Throwable {
 		
-		StopWatch watch = new StopWatch();
+		StopWatch stopWatch = new StopWatch();
 		
-		watch.start();
+		stopWatch.start();
 		Object obj = pjp.proceed();
-		watch.stop();
+		stopWatch.stop();
 		
-		log.info(pjp.getClass().getName() + " 소요 시간 " + watch.getTotalTimeSeconds());
+		log.info(pjp.getSignature().getName() + " 소요 시간 : " + stopWatch.getTotalTimeMillis());
 		
-		return obj;
+		 return obj;
+		
 	}
 
 	@Override
 	public void advice() {
-		log.info("Log Advice LogAdvice");	
+		
+		log.info("Log Advice advice...................");
 	}
-	
 }

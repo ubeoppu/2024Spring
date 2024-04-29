@@ -17,38 +17,42 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 @RequiredArgsConstructor
 public class ReplyServiceImpl implements ReplyService{
-	
+
 	private final ReplyMapper mapper;
 	
-	private final BoardMapper boardmapper;
-
+	private final BoardMapper boardMapper;
+	
 	@Transactional
 	@Override
 	public int register(ReplyVO reply) {
-		log.info("register..." + reply);
-		boardmapper.updateReplyCnt(reply.getBno(), 1);
+		log.info("register....." + reply);
+		
+		boardMapper.updateReplyCnt(reply.getBno(), 1);
+		
 		return mapper.insert(reply);
 	}
 
 	@Override
 	public ReplyVO get(Long rno) {
-		log.info("get..." + rno);
+		
+		log.info("get..... " + rno);
 		return mapper.read(rno);
 	}
 
 	@Override
 	public int modify(ReplyVO reply) {
-		log.info("modify..." + reply);
+		log.info("modify....." + reply);
+	
 		return mapper.update(reply);
 	}
 
 	@Transactional
 	@Override
 	public int remove(Long rno) {
-		log.info("delete" + rno);
+		log.info("delete...... " + rno);
 		
 		ReplyVO replyVO = mapper.read(rno);
-		boardmapper.updateReplyCnt(replyVO.getBno(), -1);
+		boardMapper.updateReplyCnt(replyVO.getBno(), -1);
 		
 		return mapper.delete(rno);
 	}
@@ -59,7 +63,7 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		return new ReplyPageDTO(
 				mapper.getCountByBno(bno),
-				mapper.getListWishPaging(cri, bno)
+				mapper.getListWithPaging(cri, bno)
 				);
 	}
 

@@ -9,31 +9,25 @@ import org.springframework.stereotype.Component;
 import lombok.extern.log4j.Log4j;
 
 @Aspect
-@Component 
+@Component()
 @Log4j
-public class Log4jAdvice implements Advice{
-	
+public class Log4jAdvice  implements Advice{
+
 	@Pointcut(" execution(* org.zerock.service.*Impl.*(..)) ")
 	public void allPointCut() {};
 	
 	@Around("allPointCut()")
-	public Object log4jAdvice(ProceedingJoinPoint pjp) throws Throwable{
+	public Object log4jAdvice(ProceedingJoinPoint pjp) throws Throwable {
 		
-		log.info(pjp.getSignature().getName()+ ".......................!!");
+		log.info( pjp.getSignature().getName()+ "...................");
 		Object obj = pjp.proceed();
 		
 		return obj;
 	}
-	
-	public void log4jAdvice() {
-		log.info("Log4j Advice...");
-	}
 
 	@Override
 	public void advice() {
-		log.info("Log4j Advice Log4jAdvice");
+		log.info("Log4j Advice Log4jAdvice..................."); 
 		
 	}
-
-
 }

@@ -17,11 +17,10 @@ public interface ReplyMapper {
 	
 	public int delete(Long rno);
 	
-	public List<ReplyVO> getListWishPaging(
-			@Param("cri")Criteria cri,
-			@Param("bno")Long bno
+	public List<ReplyVO> getListWithPaging(
+			@Param("cri") Criteria cri,
+			@Param("bno") Long bno
 			);
 	
 	public int getCountByBno(Long bno);
-
 }

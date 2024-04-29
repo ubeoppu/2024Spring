@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
 <mapper namespace="org.zerock.mapper.ReplyMapper">
-
-<insert id ="insert">
-INSERT INTO tbl_reply(rno, bno, reply, replyer)
-VALUES(seq_reply.nextval, #{bno}, #{reply}, #{replyer})
-</insert>
-
-<select id="read" resultType="org.zerock.domain.ReplyVO">
-SELECT * FROM tbl_reply where rno = #{rno}
-</select>
-
-<update id="update">
-UPDATE tbl_reply SET reply = #{reply}, updateDate = SYSDATE
-WHERE rno = #{rno}
-</update>
-
-<delete id ="delete">
-DELETE FROM tbl_reply WHERE rno = #{rno}
-</delete>
-
-<select id="getListWishPaging" resultType="org.zerock.domain.ReplyVO">
-  <![CDATA[
+  
+  <insert id="insert">
+  	insert into tbl_reply(rno, bno, reply,replyer)
+  	values(seq_reply.nextval, #{bno}, #{reply}, #{replyer})
+  </insert>
+  
+  <select id="read" resultType="org.zerock.domain.ReplyVO">
+  	select * from tbl_reply where rno = #{rno}
+  </select>
+  
+  <update id="update">
+  	update tbl_reply set reply = #{reply}, updateDate = sysdate
+  	where rno = #{rno}
+  </update>
+  
+  <delete id="delete">
+  	delete from tbl_reply where rno = #{rno}
+  </delete>
+  
+  <select id="getListWithPaging" resultType="org.zerock.domain.ReplyVO">
+   <![CDATA[
 	  	select rno, bno, reply, replyer, replydate, updatedate
 		from
 		(
@@ -36,10 +38,32 @@ DELETE FROM tbl_reply WHERE rno = #{rno}
 		)
 		where rn > (#{cri.pageNum} - 1) * #{cri.amount}  
 	]]>
-</select>
-
-<select id="getCountByBno" resultType="int">
-SELECT count(rno) FROM tbl_reply WHERE bno = #{bno}
-</select>
-
+  </select>
+  
+  <select id="getCountByBno" resultType="int">
+  	select count(rno) from tbl_reply where bno = #{bno}
+  </select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

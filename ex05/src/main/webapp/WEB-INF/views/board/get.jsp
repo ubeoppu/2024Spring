@@ -49,8 +49,8 @@
            			<input type="hidden" id="bno" name="bno" value='${board.bno}'>
            			<input type="hidden" name="pageNum" value='${cri.pageNum}'>
            			<input type="hidden" name="amount" value='${cri.amount}'>
-           			<input type="hidden" name="type" value='${cri.type }'>
-					<input type="hidden" name="keyword" value='${cri.keyword }'>
+           			<input type="hidden" name="type" value=${cri.type}>
+					<input type="hidden" name="keyword" value=${cri.keyword}>
            			
            		</form>
             		
@@ -148,20 +148,21 @@
 	cursor:pointer;
 }
 </style>
+
 <script type="text/javascript" src="/resources/js/reply.js"></script>
 
 
 <script>
-$(document).ready(function(){           //도큐먼트를 전부 읽어 들었으면 함수 실행
+$(document).ready(function(){
 	
 	console.log("JS TEST................")
 	
-	var bnoValue = "${board.bno}";      //board.bno값을 넣음
-	var replyUL = $(".chat")            //클래스 이름이 chat인 요소를 전부 다 담음
+	var bnoValue = "${board.bno}";
+	var replyUL = $(".chat")
 	
 	console.log("bnoValue................" + bnoValue)
 	
-	showList(1);   //페이지가 로드될 때 댓글 목록을 첫 번째 페이지로 표시하도록 하는 역할.
+	showList(1);
 	
 	function showList(page){
 		replyService.getList({bno:bnoValue, page:page}, function(replyCnt, list){
@@ -249,7 +250,7 @@ $(document).ready(function(){           //도큐먼트를 전부 읽어 들었�
 		
 		replyService.get(rno, function(reply){
 			modalInputReply.val(reply.reply)
-			modalInputReplyer.val(reply.replyer).attr("readonly", "readonly")
+			modalInputReplyer.val(reply.replyer)
 			modalInputReplyDate.val(  replyService.displayTime(reply.replyDate)).attr("readonly", "readonly")
 			
 			modal.data("rno", reply.rno)
@@ -275,7 +276,7 @@ $(document).ready(function(){           //도큐먼트를 전부 읽어 들었�
 		replyService.update(reply, function(result){
 			alert(result);
 			modal.modal("hide")
-			showList(1)
+			showList(pageNum)
 		})
 	})  //End 댓글 수정
 
@@ -289,7 +290,7 @@ $(document).ready(function(){           //도큐먼트를 전부 읽어 들었�
 		replyService.remove(rno, function(result){
 			alert(result);
 			modal.modal("hide")
-			showList(1)
+			showList(pageNum)
 		})
 	})  //End 댓글 삭제
 	
@@ -332,19 +333,28 @@ $(document).ready(function(){           //도큐먼트를 전부 읽어 들었�
 		str += "</ul>"
 		
 		replyPageFooter.html(str)
-		
 	}
 	
-	replyPageFooter.off("click","li a").on("click","li a", function(e){
-		e.preventDefault();
+	replyPageFooter.on("click", "li a", function(e){
+		e.preventDefault();	
 		
 		var targetPageNum = $(this).attr("href")
 		
 		pageNum = targetPageNum
 		
 		showList(pageNum);
-		
-		})
+	})
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//댓글 등록
 /* 	replyService.add(		
@@ -419,5 +429,4 @@ $(document).ready(function(){           //도큐먼트를 전부 읽어 들었�
  </script>
 
 
-
-<%@include file="../includes/footer.jsp"%>
+<%@include file="../includes/footer.jsp" %>      
