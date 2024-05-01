@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 
 @Log4j
 //@RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService{  //사용자 정보를 담는 인터페이스를 구현하는 클래스.
 	
 	@Autowired
 	private MemberMapper mapper;
@@ -21,14 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		log.info("------------------------------------------");
-		log.info(username);
+		log.info(username);	
 		log.info("------------------------------------------");
 		
 		MemberVO vo = mapper.read(username);
 		
 		log.info(vo);
 		
-		return null;
+		return vo;
 	}
 
 }

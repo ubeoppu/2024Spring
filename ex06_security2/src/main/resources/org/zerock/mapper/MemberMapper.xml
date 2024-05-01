@@ -20,7 +20,7 @@ values(#{userid}, #{auth})
   	
   	<result property="userid" column="userid"/>
   	<result property="userpw" column="userpw"/>
-  	<result property="username" column="username"/>
+  	<result property="name" column="username"/>
   	<result property="regdate" column="regdate"/>
   	<result property="updatedate" column="updatedate"/>
   	<result property="enabled" column="enabled"/>
@@ -31,6 +31,7 @@ values(#{userid}, #{auth})
   <resultMap type="org.zerock.domain.AuthVO" id="authMap">
   	<result property="userid" column="userid"/>
   	<result property="auth" column="auth"/>
+  	
   </resultMap>
   
   <select id="read" resultMap="memberMap">

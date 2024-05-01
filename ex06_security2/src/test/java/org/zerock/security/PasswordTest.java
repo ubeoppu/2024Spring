@@ -44,7 +44,7 @@ public class PasswordTest {
 			
 			memberVO.setUserid("user" + i);
 			memberVO.setUserpw(pwEncoder.encode("1111"));
-			memberVO.setUsername("USER" + i);
+			memberVO.setName("USER" + i);
 			
 			List<AuthVO>authList = new ArrayList<AuthVO>();
 			

@@ -23,24 +23,23 @@
 
 
 	<security:http> <!-- pattern="무슨 URL"을 access="무슨 권한을" -->
-		<security:intercept-url pattern="/sample/all"
-			access="permitAll" />
-		<security:intercept-url
-			pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
-		<security:intercept-url pattern="/sample/admin"
-			access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/sample/all" access="permitAll" />
+		<security:intercept-url pattern="/sample/member" access="hasRole('ROLE_MEMBER')" />
+		<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')" />
 
 		<security:csrf disabled="true" /> <!-- post 요청 할 때 csrf 대신 기입 -->
 
-		<security:form-login login-page="/customLogin"
-			authentication-success-handler-ref="customLoginSuccessHandler" />
+		<security:form-login login-page="/customLogin"	authentication-success-handler-ref="customLoginSuccessHandler" />
 
 
-		<security:logout logout-url="/customLogout"
-			invalidate-session="true" />
+
+		<security:logout logout-url="/customLogout" invalidate-session="true" 
+		delete-cookies="remeber-me, JSESSION_ID"/>
 
 		<security:access-denied-handler
 			ref="accessDeniedHandler" />
+			
+			<security:remember-me data-source-ref="dataSource" token-validity-seconds="86400" />
 
 	</security:http>
 
