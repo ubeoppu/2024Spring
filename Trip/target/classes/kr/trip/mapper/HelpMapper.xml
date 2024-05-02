@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.trip.mapper.HelpMapper">
+
+<select id="getListWithPaging" resultType="kr.trip.domain.HelpVO">
+     SELECT *
+FROM
+    help
+LIMIT #{pageNum}, #{amount}
+  </select>
+
+<select id="getListHelp" resultType="kr.trip.domain.HelpVO">
+SELECT * FROM HELP WHERE help_id > 0
+</select>
+
+<insert id="insertHelp">
+INSERT INTO help (help_id, member_email, title, content) VALUES
+(#{help_id}, #{member_email}, #{title}, #{content});
+</insert>
+
+<select id="readHelp" resultType="kr.trip.domain.HelpVO">
+SELECT * FROM help WHERE help_id = #{help_id}
+</select>
+
+<update id="updateHelp">
+UPDATE help SET title = #{title}, content = #{content}, image = #{image}, updateDate = CURRENT_TIMESTAMP
+WHERE help_id = #{help_id} 
+</update>
+
+<delete id="deleteHelp">
+DELETE FROM help WHERE help_id = #{help_id}
+</delete>
+</mapper>
