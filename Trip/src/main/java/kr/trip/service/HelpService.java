@@ -12,12 +12,12 @@ public interface HelpService {
 	//List
 	public List<HelpVO> getListHelp();
 	//C
-	public int insertHelp(HelpVO vo);
+	public boolean insertHelp(HelpVO vo);
 	//R
 	public HelpVO readHelp(int help_id);
 	//U
-	public int updateHelp(HelpVO vo);
+	public boolean updateHelp(HelpVO vo);
 	//D
-	public int deleteHelp(int help_id);
+	public boolean deleteHelp(int help_id);
 
 }

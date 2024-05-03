@@ -19,7 +19,7 @@ public class Log4jAdvice implements Advice{
 	
 	@Around("allPointCut()")
 	public Object log4jAdvice(ProceedingJoinPoint pjp)throws Throwable{
-		log.info(pjp.getSignature().getName() + "실행");
+		log.info(pjp.getSignature().getName() + " : 실행");
 		Object obj = pjp.proceed();
 		
 		return obj;

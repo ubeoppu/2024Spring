@@ -19,9 +19,9 @@
 		<level value="info" />
 	</logger>
 
-	<logger name="org.zerock.security">
+<!-- 	<logger name="org.zerock.security">
 		<level value="info" />
-	</logger>
+	</logger> -->
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">
@@ -40,9 +40,9 @@
 		<level value="info" />
 	</logger>
 
-	<logger name="org.springframework.security">
+<!-- 	<logger name="org.springframework.security">
 		<level value="trace" />
-	</logger>
+	</logger> -->
 
 	<!-- Root Logger -->
 	<root>

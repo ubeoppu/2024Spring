@@ -40,8 +40,8 @@ public class HelpServiceImpl implements HelpService{
 	}
 
 	@Override
-	public int insertHelp(HelpVO vo) {
-		return helpmapper.insertHelp(vo);
+	public boolean insertHelp(HelpVO vo) {
+		return   helpmapper.insertHelp(vo) == 1;
 	}
 
 	@Override
@@ -50,12 +50,12 @@ public class HelpServiceImpl implements HelpService{
 	}
 
 	@Override
-	public int updateHelp(HelpVO vo) {
-		return helpmapper.updateHelp(vo);
+	public boolean updateHelp(HelpVO vo) {
+		return helpmapper.updateHelp(vo) == 1;
 	}
 
 	@Override
-	public int deleteHelp(int help_id) {
-		return helpmapper.deleteHelp(help_id);
+	public boolean deleteHelp(int help_id) {
+		return helpmapper.deleteHelp(help_id) == 1;
 	} 
 }

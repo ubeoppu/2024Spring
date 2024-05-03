@@ -29,6 +29,8 @@
 	            		<textarea rows="3" class="form-control" name="content"></textarea>
             		</div>
             		
+            		
+            		
             		<div class="form-group">
 	            		<label>Writer</label>
 	            		<input class="form-control" name="writer"  readonly="readonly"
