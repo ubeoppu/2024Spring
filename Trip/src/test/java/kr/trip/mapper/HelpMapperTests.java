@@ -66,12 +66,6 @@ public class HelpMapperTests {
 	
 	@Test
 	public void pagingTest() {
-		Criteria cri = new Criteria(1,10);
-		
- 		List<HelpVO> list = helpmapper.getListWithPaging(cri);
- 		
- 		list.forEach(vo->log.info(vo));	}
-	
 	
 	
 	

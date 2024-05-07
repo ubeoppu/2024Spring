@@ -10,7 +10,7 @@
   	<trim prefix="(" suffix=") and">
    			<foreach collection="typeArr" item="type" separator="or">
    				<if test="type == 'T'.toString()">
-   					title like '%' || #{keyword} || '%'
+   					title like '%#{keyword}%'
    				</if>
    				
    				<if test="type == 'C'.toString()">

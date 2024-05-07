@@ -36,6 +36,9 @@ public class MemberMapperTests {
 		e.printStackTrace();
 	}
 	}
+	@Test
+	public void test() {
+	}
 	
 
 }

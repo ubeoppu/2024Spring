@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.trip.domain.Criteria;
 import kr.trip.domain.HelpVO;
+import kr.trip.domain.HelpaVO;
 
 public interface HelpMapper {
 	//Paging
@@ -19,4 +20,7 @@ public interface HelpMapper {
 	//D
 	public int deleteHelp(int help_id);
 	
+	public int getTotalCount();
+	
+	public int insertHelpA(HelpaVO vo);
 }

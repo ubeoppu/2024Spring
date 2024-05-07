@@ -26,7 +26,7 @@
 	<security:logout logout-url="/customLogout" invalidate-session="true" 
 		delete-cookies="remeber-me, JSESSION_ID"/>
 	
-	<security:remember-me data-source-ref="dataSource" token-validity-seconds="86400" />
+	<security:remember-me data-source-ref="dataSource" token-validity-seconds="864000" />
 	</security:http>
 	
 	<security:authentication-manager>

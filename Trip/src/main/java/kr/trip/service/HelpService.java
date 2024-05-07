@@ -7,10 +7,8 @@ import kr.trip.domain.HelpVO;
 
 public interface HelpService {
 	
-	//Paging
-	public List<HelpVO> getListWithPaging(Criteria cri);
 	//List
-	public List<HelpVO> getListHelp();
+	public List<HelpVO> getListHelp(Criteria cri);
 	//C
 	public boolean insertHelp(HelpVO vo);
 	//R

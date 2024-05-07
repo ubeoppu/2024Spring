@@ -20,7 +20,9 @@ public class PageDTO {
 		this.total = total;
 		
 		this.endPage = (int)(Math.ceil(cri.getPageNum()/10.0)) * 10;
+		System.out.println("!!endPage : " + endPage);
 		this.startPage = endPage -9;
+		System.out.println("!!startPage :" + startPage);
 		
 		int realEnd = (int)(Math.ceil(( total * 1.0) / cri.getAmount()));
 		

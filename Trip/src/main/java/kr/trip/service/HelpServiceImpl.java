@@ -18,25 +18,24 @@ public class HelpServiceImpl implements HelpService{
 	//생성자 주입
 	private final HelpMapper helpmapper;
 
-	@Override
-	public List<HelpVO> getListWithPaging(Criteria cri){
-		
-		int pageNum = cri.getPageNum();
-		
-		if(pageNum <= 0) {
-			
-			pageNum = 1;
-		}
-		pageNum = (pageNum - 1) * 10;
-		
-		cri.setPageNum(pageNum);
-		
-		return helpmapper.getListWithPaging(cri);
-	}
 
 	@Override
-	public List<HelpVO> getListHelp() {
-		return helpmapper.getListHelp();
+	public List<HelpVO> getListHelp(Criteria cri) {
+		int page = cri.getPageNum();
+		
+		if(page <= 0) {
+			
+			page = 1;
+		}
+		page = (page - 1) * 10;
+		
+		cri.setPage(page);
+		
+		System.out.println("cri총 값 체크" + cri);
+		log.info("-----------------------");
+		log.info("cri의 총 값"+cri);
+		log.info("-----------------------");
+		return helpmapper.getListWithPaging(cri);
 	}
 
 	@Override

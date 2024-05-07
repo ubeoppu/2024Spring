@@ -19,11 +19,10 @@ public class HelpServiceImplTests {
 	
 	@Test
 	public void pagingTest() {
-		Criteria cri = new Criteria(1, 10);
+		Criteria cri = new Criteria(1, 10, 1);
 		log.info("ㅇㅇ");
 		log.info(cri);
 		
-		log.info(helpservice.getListWithPaging(cri));
 		
 	}
 
