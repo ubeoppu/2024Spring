@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@taglib prefix="sec"  uri="http://www.springframework.org/security/tags" %>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@include file="../includes/header.jsp"%>
 
@@ -53,6 +54,7 @@
 
 <!-- /.row -->
 <div class="row">
+<c:if test="${help.answer == 0 }">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">문의 답변</div>
@@ -72,6 +74,31 @@
 		</div>
 		</div>
 	</div>
+	</c:if>
+</div>
+
+<div class="row">
+<c:if test="${help.answer == 1 }">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">문의 답변</div>
+			<div class="panel-body">
+					<div class="form-group">
+					<label>답변 번호</label> <input class="form-control" name="bno"
+						value="${helpa.helpa_id }" readonly="readonly">
+				</div>
+            <sec:authentication property="principal" var="pinfo"/>
+			<div class="form-group">
+				<label>내용</label>
+				<textarea rows="6" class="form-control" name="content" readonly="readonly">
+				${helpa.content }
+            	   </textarea>
+			</div>
+			
+		</div>
+		</div>
+	</div>
+	</c:if>
 </div>
 
 <style>

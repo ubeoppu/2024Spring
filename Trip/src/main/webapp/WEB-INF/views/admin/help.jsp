@@ -36,7 +36,7 @@
 	                            <td>${help.member_email } </td>
 	                            <td><fmt:formatDate value="${help.regDate }" pattern="yyyy-MM-dd"  /></td>
 	                            <c:choose>
-	                            <c:when test="${help.boolean }">
+	                            <c:when test="${help.answer == 1}">
 	                            <td style="color: red;">답변 완료</td>
 	                            </c:when>
 	                            

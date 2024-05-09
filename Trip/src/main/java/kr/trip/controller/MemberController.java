@@ -1,12 +1,14 @@
 package kr.trip.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.trip.domain.AuthVO;
@@ -43,7 +45,6 @@ public class MemberController {
    
    @GetMapping("/join")
    public void join() {
-      
    }
    
    
@@ -58,6 +59,17 @@ public class MemberController {
       
       return "redirect:/customLogin";
    }
+   
+   @PreAuthorize("hasRole('ROLE_MEMBER')")
+   @GetMapping("/pay")
+   public void getPay(Model model) {
+	   model.addAttribute("member_email", "test12");
+	   model.addAttribute("name", "임재현");
+   }
+   @GetMapping("/main")
+   public void mainGet() {
+   }
+   
    
    
    

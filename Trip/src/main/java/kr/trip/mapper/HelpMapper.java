@@ -23,4 +23,8 @@ public interface HelpMapper {
 	public int getTotalCount();
 	
 	public int insertHelpA(HelpaVO vo);
+	
+	public int updateAnswer(int help_id);
+	
+	public HelpaVO readHelpA(int help_id);
 }

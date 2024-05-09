@@ -16,8 +16,6 @@ regdate DATETIME DEFAULT current_timestamp
 );
 */
 
-@AllArgsConstructor
-@Builder
 @Data
 public class HelpVO {
 	
@@ -28,5 +26,6 @@ public class HelpVO {
 	private byte[] image;
 	private Date regDate;
 	private Date updateDate;
+	private int answer;
 	
 }

@@ -23,17 +23,6 @@ public class HelpMapperTests {
 	
 	@Test
 	public void insertHelpTest() {
-		HelpVO vo = HelpVO.builder()
-				.help_id(5)
-				.member_email("test1234")
-				.title("라스트 테스트")
-				.content("테스트내용")
-				.build();
-		log.info(vo);
-		
-		helpmapper.insertHelp(vo);
-		
-		log.info(vo);
 	}
 	
 	@Test
@@ -45,13 +34,6 @@ public class HelpMapperTests {
 	
 	@Test
 	public void updateHelpTest() {
-		HelpVO vo = HelpVO.builder()
-				.title("수정된 제목")
-				.content("수정된 내용")
-				.help_id(4)
-				.build();
-		log.info(vo);
-	helpmapper.updateHelp(vo);
 	}
 	
 	@Test
@@ -64,8 +46,6 @@ public class HelpMapperTests {
 		helpmapper.getListHelp().forEach(result -> log.info(result));
 	}
 	
-	@Test
-	public void pagingTest() {
 	
 	
 	

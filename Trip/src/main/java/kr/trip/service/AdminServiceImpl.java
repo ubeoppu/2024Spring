@@ -59,6 +59,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public void insertHelpA(HelpaVO vo) {
 		helpmapper.insertHelpA(vo);
+		helpmapper.updateAnswer(vo.getHelp_id());
+	}
+
+	@Override
+	public HelpaVO readHelpA(int help_id) {
+		return helpmapper.readHelpA(help_id);
 	}
 	
 	

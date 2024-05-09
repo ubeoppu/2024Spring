@@ -37,12 +37,16 @@ LIMIT #{amount} OFFSET #{page}
 	</select>
 
 	<insert id="insertHelp">
-		INSERT INTO help (help_id, member_email, title, content) VALUES
-		(#{help_id}, #{member_email}, #{title}, #{content});
+		INSERT INTO help (member_email, title, content) VALUES
+		(#{member_email}, #{title}, #{content});
 	</insert>
 
 	<select id="readHelp" resultType="kr.trip.domain.HelpVO">
 		SELECT * FROM help WHERE help_id = #{help_id}
+	</select>
+	
+	<select id="readHelpA" resultType="kr.trip.domain.HelpaVO">
+	SELECT * FROM helpa WHERE help_id = #{help_id}
 	</select>
 
 	<update id="updateHelp">
@@ -64,7 +68,10 @@ LIMIT #{amount} OFFSET #{page}
 	<insert id="insertHelpA">
 	INSERT INTO helpa (help_id, content, image, member_email) VALUES(#{help_id}, #{content}, #{image}, #{member_email})
 	</insert>
-	
-	
+	<update id="updateAnswer">
+		UPDATE help
+        SET answer = 1
+        WHERE help_id = #{help_id}
+	</update>
 
 </mapper>

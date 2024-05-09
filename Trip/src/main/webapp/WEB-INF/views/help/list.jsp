@@ -12,7 +12,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-               Admin Help List Page
+              Help List Page
                 <button id="regBtn" type="button" class="btn btn-xs pull-right btn-info">Register New Board</button>
             </div>
             <!-- /.panel-heading -->

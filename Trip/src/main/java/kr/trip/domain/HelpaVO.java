@@ -20,8 +20,8 @@ regdate DATETIME DEFAULT current_timestamp
 @Data
 public class HelpaVO {
 
-	private String helpa_id;
-	private String help_id;
+	private Long helpa_id;
+	private int help_id;
 	private String member_email;
 	private String content;
 	private byte[] image;

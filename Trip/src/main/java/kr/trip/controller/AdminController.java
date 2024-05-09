@@ -63,12 +63,13 @@ public class AdminController {
 	public void readHelpA(@RequestParam("help_id")int help_id,Model model) {
 		
 	model.addAttribute("help", adminservice.readHelp(help_id));
+	model.addAttribute("helpa", adminservice.readHelpA(help_id));
 	
 	
 	}
 	@PostMapping("/helpa")
 	public String insertHelpA(HelpaVO vo, RedirectAttributes rttr) {
-		log.info("helpA테스트"+vo);
+		log.info("helpA테스트" + vo);
 		adminservice.insertHelpA(vo);
 		
 		return "redirect:/admin/help";

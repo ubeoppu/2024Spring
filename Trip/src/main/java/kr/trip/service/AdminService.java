@@ -20,4 +20,6 @@ public interface AdminService {
 	public int getTotal();
 	
 	public void insertHelpA(HelpaVO vo);
+	
+	public HelpaVO readHelpA(int help_id);
 }
