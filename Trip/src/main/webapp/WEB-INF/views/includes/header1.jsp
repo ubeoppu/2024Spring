@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+        <%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
     <head>
         <meta charset="utf-8">
@@ -32,16 +34,17 @@ http://www.templatemo.com/tm-406-flex
                                 <div class="col-md-10 col-sm-10 main-menu text-right">
                                     <div class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></div>
                                     <ul class="menu-first">
+    <sec:authentication property="principal" var="pinfo"/>
                                         <li class="active"><a href="#">메인 홈</a></li>
                                         <li><a href="#portfolio">여행지</a></li>
                                         <li><a href="#services">여행 계획</a></li>
                                         <li><a href="">고객 센터</a></li> 
-                                        <li><a href="">로그인</a></li>                                 
+                                        <li><a href="/customLogin">로그인</a></li>
+                                        <li><a href="/customLogout">로그아웃</a></li>
                                     </ul>                                    
                                 </div> <!-- /.main-menu -->
                             </div> <!-- /.row -->
                         </div> <!-- /#menu-wrapper -->                        
                 </div> <!-- /.main-header -->
             </div> <!-- /.site-header -->
-    </body>
     

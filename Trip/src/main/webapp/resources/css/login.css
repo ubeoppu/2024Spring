@@ -31,7 +31,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: #80F5FF;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -42,15 +42,23 @@
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
+  background: #4374D9;
 }
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
   font-size: 12px;
 }
+.form .info a{
+	color: #b3b3b3;
+  font-size: 12px;
+}
+.form .info .id{
+	color: #999999;
+}
+
 .form .message a {
-  color: #4CAF50;
+  color: #80F5FF;
   text-decoration: none;
 }
 .form .register-form {
@@ -92,8 +100,73 @@
 body {
   background: #76b852; /* fallback for old browsers */
   background: rgb(141,194,111);
-  background: linear-gradient(90deg, rgba(141,194,111,1) 0%, rgba(118,184,82,1) 50%);
+  background:#FFFFFF;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;      
 }
+.striped {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      margin: 1rem 0;
+}
+      .striped-line {
+flex: auto;
+        flex-basis: auto;
+        border: none;
+        outline: none;
+        height: 2px;
+        background: #BDBDBD;
+}
+.text-gray-500 {
+    --tw-text-opacity: 1;
+    color: rgb(170 177 184 / var(--tw-text-opacity));
+}
+.striped-text {
+  padding: 0 5px; /* 가로선과 텍스트 사이의 간격을 조정합니다. */
+  color: #BDBDBD;
+}
+  .image {
+    width: 55px; /* 원하는 너비로 조절 */
+    height: 55px; /* 자동으로 높이를 조정하여 원래 가로 세로 비율을 유지합니다. */
+    margin-top:10px;
+    margin-left: 108px;
+  }
+  .inline {
+  display: inline;
+}
+.form label {
+  display: inline-block;
+  white-space: nowrap;
+}
+.form .emailBtn{
+	  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #80F5FF;
+  border-radius:5px;
+  width: 95px;
+  height: 30px;
+  border: 0;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-bottom:10px;
+   display: flex;
+  justify-content: center; /* 수평으로 가운데 정렬 */
+  align-items: center; /* 수직으로 가운데 정렬 */
+}
+.form input[type="checkbox"] {
+	display: inline-block; /* 가로로 배열되도록 설정 */
+	float: left;
+}
+
+.checkboxDiv {margin-bottom: 10px;}
+
+.checkboxDiv label {width:90%; text-align:left;}
+
+.checkboxDiv input {width:15px; height:15px;}

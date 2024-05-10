@@ -30,6 +30,7 @@ public class AdminController {
 	public void main() {}
 	
 	
+	
 	@GetMapping("/member")
 	public void getMemberList(Model model) {
 	model.addAttribute("list",adminservice.getListMember());	
