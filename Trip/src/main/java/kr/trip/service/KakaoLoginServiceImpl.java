@@ -132,8 +132,8 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 						JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 						JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-						// System.out.println(properties.get("nickname"));
-						// System.out.println(kakao_account.get("email"));
+//					   System.out.println("테스트1"+properties.get("nickname"));
+//					     System.out.println("테스트2"+kakao_account.get("email"));
 
 						String nickname = properties.get("nickname").getAsString();
 						String email = kakao_account.get("email").getAsString();

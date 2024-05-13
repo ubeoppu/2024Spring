@@ -165,7 +165,7 @@ body {
 }
 
 a {
-  color: #80F5FF;
+  color: rgb(80 212 229);
   text-decoration: none;
   -webkit-transition: all 200ms ease-in-out;
   -moz-transition: all 200ms ease-in-out;
@@ -294,7 +294,7 @@ hr {
   padding-left: 130px;
   line-height: 100px;
   text-transform: uppercase;
-  color: #80F5FF;
+  color: rgb(80 212 229);
   font-size: 32px;
   font-weight: 700;
 }
@@ -313,10 +313,6 @@ hr {
   line-height: 100px;
   padding-top: 37px;
 }
-.main-menu ul li.active a {
-  border-top: 3px solid #80F5FF;
-  color: #80F5FF;
-}
 
 .toggle-menu {
   width: 36px;
@@ -327,7 +323,7 @@ hr {
   text-align: center;
   line-height: 36px;
   font-size: 14px;
-  background: #80F5FF;
+  background: rgb(80 212 229);
   display: inline-block;
   color: white;
   cursor:pointer;
@@ -347,7 +343,7 @@ hr {
   font-size: 14px;
 }
 .menu-responsive ul li.active a {
-  color: #80F5FF;
+  color: rgb(80 212 229);
 }*/
 
 .flexslider {
@@ -390,7 +386,7 @@ hr {
 }
 .flexslider .slider-caption a.slider-btn {
   color: white;
-  background-color: #80F5FF;
+  background-color: rgb(80 212 229);
   padding: 12px 20px;
   border-radius: 4px;
   text-transform: uppercase;
@@ -444,7 +440,6 @@ hr {
     float: right;
     overflow: auto;
     width: 100%;  
-    display: none;  
     /*opacity: 1;  */  
     /*height: 0;  */  
     /*background: rgba(50, 50, 50, 0.88);*/
@@ -610,7 +605,7 @@ hr {
   border-radius:5%;
 }
 /* .portfolio-item .portfolio-thumb .portfolio-overlay {
-  background-color: #80F5FF;
+  background-color: rgb(80 212 229);
   position: absolute;
   width: 100%;
   height: 100%;
@@ -658,7 +653,7 @@ hr {
 
 
 #go-top {
-  background-color: #80F5FF;
+  background-color: rgb(80 212 229);
   color: white;
   padding: 15px 40px;
   text-transform: uppercase;

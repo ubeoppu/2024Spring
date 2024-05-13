@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import kr.trip.domain.ContentVO;
 import kr.trip.domain.Criteria;
 import kr.trip.domain.HelpVO;
 import kr.trip.domain.HelpaVO;
 import kr.trip.domain.MemberVO;
+import kr.trip.mapper.AdminMapper;
 import kr.trip.mapper.HelpMapper;
 import kr.trip.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +23,8 @@ public class AdminServiceImpl implements AdminService{
 	private final MemberMapper membermapper;
 	
 	private final HelpMapper helpmapper;
+	
+	private final AdminMapper adminmapper;
 	
 	@Override
 	public List<MemberVO> getListMember() {
@@ -65,6 +69,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public HelpaVO readHelpA(int help_id) {
 		return helpmapper.readHelpA(help_id);
+	}
+
+	@Override
+	public void insertContent(ContentVO vo) {
+		adminmapper.insertContent(vo);
 	}
 	
 	

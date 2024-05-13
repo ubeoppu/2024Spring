@@ -39,7 +39,7 @@
                                     <a href="#" class="slider-btn">회원 결제하기</a>
                                 </div>
                             </li>
-                            <li>z
+                            <li>
                                 <div class="overlay"></div>
                                 <img src="/resources/images/서울.jpg" alt="">
                                 <div class="slider-caption visible-md visible-lg">

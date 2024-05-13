@@ -16,6 +16,11 @@
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
+.form .error{
+	color:red;
+	margin-bottom:15px;
+	font-weight:bold;
+}
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -31,12 +36,13 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #80F5FF;
+  background: rgb(80 212 229);
   width: 100%;
   border: 0;
   padding: 15px;
   color: #FFFFFF;
   font-size: 14px;
+  border-radius:5px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
@@ -58,7 +64,7 @@
 }
 
 .form .message a {
-  color: #80F5FF;
+  color: rgb(80 212 229);
   text-decoration: none;
 }
 .form .register-form {
@@ -145,7 +151,7 @@ flex: auto;
 	  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #80F5FF;
+  background: rgb(80 212 229);
   border-radius:5px;
   width: 95px;
   height: 30px;
@@ -160,13 +166,20 @@ flex: auto;
   justify-content: center; /* 수평으로 가운데 정렬 */
   align-items: center; /* 수직으로 가운데 정렬 */
 }
-.form input[type="checkbox"] {
-	display: inline-block; /* 가로로 배열되도록 설정 */
+/* .form input[type="checkbox"] {
+	display: inline-block; 가로로 배열되도록 설정
 	float: left;
-}
+} */
+
+.checkboxDiv2 input{width:15px; height:13px; margin-top:20px;}
+
 
 .checkboxDiv {margin-bottom: 10px;}
 
 .checkboxDiv label {width:90%; text-align:left;}
 
-.checkboxDiv input {width:15px; height:15px;}
+.checkboxDiv input {
+  width:15px; height:15px;
+  display: inline-block;
+  float: left;
+}

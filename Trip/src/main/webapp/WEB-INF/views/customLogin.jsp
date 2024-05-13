@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="login-page">
-		<div class="form">
+		<div class="form" id="customLogin">
 			<form class="register-form" action="/member/register" method="post">
 			<label id="label1"></label>
 				<input type="text" name="member_email" id="id"
@@ -71,7 +71,12 @@
 					<a href="/member/findid" class="id">아이디,</a><a
 						href="/member/findpwd">비밀번호를 잊으셨나요?</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</p>
-				<button id="loginBtn">로그인</button>
+				
+				<div class="checkboxDiv2">
+				자동 로그인
+				<input type="checkbox" checked="checked" name="remember-me">
+				</div>
+				<button id="loginBtn" style="margin-top:15px;">로그인</button>
 				<p class="message">
 					아직 회원이 아니세요? <a href="#">이메일 회원 가입</a>
 				</p>
@@ -84,6 +89,7 @@
 					href="https://kauth.kakao.com/oauth/authorize?client_id=3334abd3f2359d5a2d50f1d20357c04f&redirect_uri=http://localhost:8181/login/kakao&response_type=code">
 					<img src="/resources/images/카카오로그인.jpg" alt="카카오톡" class="image">
 				</a>
+				<button type="button" onclick="location.href='https://kauth.kakao.com/oauth/logout?client_id=3334abd3f2359d5a2d50f1d20357c04f&logout_redirect_uri=http://localhost:8181/login/kakaoLogout'">카카오 로그아웃</button>
 			</form>
 		</div>
 	</div>
@@ -234,7 +240,12 @@
 						console.log("result : " +  result);
 						checkInput.attr('disabled',false);
 						code =result;
+						if(email !== ""){
 						alert('인증번호가 전송되었습니다.')
+						}else{
+							alert('이메일을 입력해주세요')
+							return false
+						}
 					}			
 				}); // end ajax
 			}); // end send eamil

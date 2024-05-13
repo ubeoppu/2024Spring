@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.trip.domain.ContentVO;
 import kr.trip.domain.Criteria;
 import kr.trip.domain.HelpaVO;
 import kr.trip.domain.PageDTO;
@@ -76,6 +77,16 @@ public class AdminController {
 		return "redirect:/admin/help";
 	}
 	
+	@GetMapping("/content")
+	public void getContent() {}
+	
+	@PostMapping("/content")
+	public String postContent(ContentVO vo, RedirectAttributes rttr) {
+		log.info(vo);
+		adminservice.insertContent(vo);
+		
+		return "redirect:";
+	}
 		
 
 }

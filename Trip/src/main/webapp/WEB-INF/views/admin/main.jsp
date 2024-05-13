@@ -16,5 +16,8 @@
 <form action="/admin/help" method="get">
 <button type="submit">문의사항 리스트 페이지</button>
 </form>
+<form action="/admin/content" method="get">
+<button type="submit">콘텐츠 추가 페이지</button>
+</form>
 </body>
 </html>

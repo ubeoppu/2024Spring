@@ -28,19 +28,22 @@ http://www.templatemo.com/tm-406-flex
                             <div class="row">
                                 <div class="logo-wrapper col-md-2 col-sm-2">
                                     <h1>
-                                        <a href="#">TRIP</a>
+                                        <a href="/main">TRIP</a>
                                     </h1>
                                 </div> <!-- /.logo-wrapper -->
                                 <div class="col-md-10 col-sm-10 main-menu text-right">
-                                    <div class="toggle-menu visible-sm visible-xs"><i class="fa fa-bars"></i></div>
-                                    <ul class="menu-first">
-    <sec:authentication property="principal" var="pinfo"/>
-                                        <li class="active"><a href="#">메인 홈</a></li>
+                                    <ul class="menu">
+                                        <li class="active"><a href="/main">메인 홈</a></li>
                                         <li><a href="#portfolio">여행지</a></li>
                                         <li><a href="#services">여행 계획</a></li>
-                                        <li><a href="">고객 센터</a></li> 
+                                        <li><a href="#">게시판</a> </li>
+                                        <li><a href="#">고객 센터</a></li> 
+                                        <sec:authorize access="isAnonymous()"> <!-- 로그인 안했을 때 표시 -->
                                         <li><a href="/customLogin">로그인</a></li>
+                                        </sec:authorize>
+                                        <sec:authorize access="isAuthenticated()"> <!--  로그인 하였을 때 표시 -->
                                         <li><a href="/customLogout">로그아웃</a></li>
+                                        </sec:authorize>
                                     </ul>                                    
                                 </div> <!-- /.main-menu -->
                             </div> <!-- /.row -->

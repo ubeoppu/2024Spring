@@ -22,13 +22,31 @@ import kr.trip.domain.AuthVO;
 import kr.trip.domain.MemberVO;
 import kr.trip.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j;
 
 
 @RequiredArgsConstructor
 @Controller
+@Log4j
 public class CommonController {
 
 	private final MemberService memberService;
+	
+	@GetMapping("/customLogin")
+	public void loginInput(String error, String logout, Model model) {
+		
+		log.info("error : " + error);
+		log.info("logout : " + logout);
+		
+		if(error != null) {
+			model.addAttribute("error", "아이디 및 비번이 틀립니다.");
+		}
+		
+		if(logout != null) {
+			model.addAttribute("logout", "로그아웃");
+		}
+	}
+	
 	
 	@GetMapping("/main")
 	public void main(Model model) {
@@ -41,10 +59,6 @@ public class CommonController {
 		model.addAttribute("auth",auth);
 	}
 	
-	@GetMapping("/customLogin")
-	public void customLogin() {
-		
-	}
 	
 	@GetMapping("/error")
 	public void error(Authentication auth, Model model) {

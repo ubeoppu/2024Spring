@@ -2,6 +2,7 @@ package kr.trip.service;
 
 import java.util.List;
 
+import kr.trip.domain.ContentVO;
 import kr.trip.domain.Criteria;
 import kr.trip.domain.HelpVO;
 import kr.trip.domain.HelpaVO;
@@ -22,4 +23,6 @@ public interface AdminService {
 	public void insertHelpA(HelpaVO vo);
 	
 	public HelpaVO readHelpA(int help_id);
+	
+	public void insertContent(ContentVO vo);
 }

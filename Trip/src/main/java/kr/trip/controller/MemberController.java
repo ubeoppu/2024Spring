@@ -1,41 +1,36 @@
 package kr.trip.controller;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.trip.domain.AuthVO;
 import kr.trip.domain.MemberVO;
+import kr.trip.security.CustomUserDetailsService;
 import kr.trip.service.KakaoLoginService;
 import kr.trip.service.MemberService;
 import kr.trip.service.certifiedPhoneNumber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
-import net.nurigo.java_sdk.Coolsms;
 
 @Controller
 @Log4j
@@ -96,7 +91,6 @@ public class MemberController {
 		System.out.println("###email#### : " + userInfo.getMember_email());
 		model.addAttribute("email",userInfo.getMember_email());
 		model.addAttribute("name",userInfo.getName());
-		
 		if(memberService.read(userInfo.getMember_email())!= null) {
 			return "/main";
 		}else {
