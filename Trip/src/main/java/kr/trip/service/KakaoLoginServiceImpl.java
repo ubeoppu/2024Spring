@@ -7,10 +7,18 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -132,8 +140,8 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 						JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 						JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 
-//					   System.out.println("테스트1"+properties.get("nickname"));
-//					     System.out.println("테스트2"+kakao_account.get("email"));
+						// System.out.println(properties.get("nickname"));
+						// System.out.println(kakao_account.get("email"));
 
 						String nickname = properties.get("nickname").getAsString();
 						String email = kakao_account.get("email").getAsString();
@@ -141,7 +149,6 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 						
 						userInfo.setName(nickname);
 						userInfo.setMember_email(email);
-						
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -149,8 +156,21 @@ public class KakaoLoginServiceImpl implements KakaoLoginService{
 				
 				
 					return userInfo;					
-				
-		
 	}
 
+	@Override
+	public UserDetails getAuthorities(String member_email) throws Throwable {
+		MemberVO vo = memberMapper.read(member_email);
+		vo.getAuthorities();
+		 
+		 System.out.println("vo : " +  vo.getAuthorities());
+		 Authentication authentication = new UsernamePasswordAuthenticationToken(member_email,"", vo.getAuthorities());
+		 SecurityContextHolder.getContext().setAuthentication(authentication); 
+		return vo;
+	}
+	
+	
+
+	
+	
 }

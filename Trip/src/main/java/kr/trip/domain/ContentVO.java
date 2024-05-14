@@ -2,7 +2,10 @@ package kr.trip.domain;
 
 import java.util.Date;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 /*content_id	varchar(100)
 addr1	varchar(100)
@@ -17,7 +20,9 @@ image1	longblob
 mapx	varchar(200)
 mapy	varchar(200)
 maplevel	varchar(20)*/
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
 public class ContentVO {
 	private String content_id;
 	private String addr1;

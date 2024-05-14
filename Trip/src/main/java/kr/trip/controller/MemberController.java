@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,7 +80,7 @@ public class MemberController {
 	
 	
 	@GetMapping("/login/kakao")
-	public String kakaoOauth(@RequestParam(required = false) String code, Model model) throws Throwable {
+	public String kakaoOauth(@RequestParam(required = false) String code, Model model, RedirectAttributes rttr) throws Throwable {
 		System.out.println(code);
 		
 		String access_Token = kakaoS.getAccessToken(code);
@@ -89,10 +90,15 @@ public class MemberController {
 		MemberVO userInfo = kakaoS.getUserInfo(access_Token);
 		System.out.println("###nickname#### : " + userInfo.getName());
 		System.out.println("###email#### : " + userInfo.getMember_email());
-		model.addAttribute("email",userInfo.getMember_email());
-		model.addAttribute("name",userInfo.getName());
+		rttr.addAttribute("member_email",userInfo.getMember_email());
+		rttr.addAttribute("name",userInfo.getName());
+		
+		UserDetails user = kakaoS.getAuthorities(userInfo.getMember_email());
+		
+		rttr.addAttribute("auth",user.getAuthorities());
+		
 		if(memberService.read(userInfo.getMember_email())!= null) {
-			return "/main";
+			return "redirect:/main";
 		}else {
 			return "/login/kakao";			
 		}
@@ -102,7 +108,7 @@ public class MemberController {
 	@PostMapping("/login/kakao")
 	@Transactional
 	public String kakaoRegister(@RequestParam("member_email") String member_email, @RequestParam("name") String name,
-			@RequestParam("phone")String phone, RedirectAttributes rttr ) {
+			@RequestParam("phone")String phone, RedirectAttributes rttr, Model model ) {
 		MemberVO vo = new MemberVO();
 		
 		vo.setMember_email(member_email);
@@ -112,6 +118,11 @@ public class MemberController {
 		System.out.println("카카오 db 저장 : " + vo);
 		memberService.register(vo);
 		memberService.insertAuth(new AuthVO(member_email, "ROLE_MEMBER"));
+		
+		
+		
+		rttr.addAttribute("member_email",member_email);
+		rttr.addAttribute("auth",vo.getAuthList());
 		
 		return "redirect:/main";
 	}

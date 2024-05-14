@@ -23,7 +23,7 @@
 	
 	<security:csrf disabled="true"/> <!-- post요청 시 csrf(토큰) 대신 기입 -->
 	
-	<security:form-login login-page="/customLogin" authentication-success-handler-ref="customLoginSuccessHandler"/>
+	<security:form-login login-page="/customLogin" authentication-success-hand ler-ref="customLoginSuccessHandler"/>
 	<security:form-login login-page="/customLogin" />
 	
 	<security:logout logout-url="/customLogout" invalidate-session="true" 
