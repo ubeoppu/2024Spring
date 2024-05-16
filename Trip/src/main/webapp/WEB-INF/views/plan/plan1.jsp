@@ -104,99 +104,13 @@
       </div>
       </c:forEach>
       </div>
-    <!-- <div class="list-group list-group-flush border-bottom scrollarea">
-      <a href="#" class="list-group-item list-group-item-action active py-3 lh-tight" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small>Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" aria-current="true">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Wed</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Tues</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-      <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-        <div class="d-flex w-100 align-items-center justify-content-between">
-          <strong class="mb-1">List group item heading</strong>
-          <small class="text-muted">Mon</small>
-        </div>
-        <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.</div>
-      </a>
-    </div> -->
   </div>
  <div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold">내가 선택한 곳</span>
     </a>
+    <button class="dropBtn" value=1>장소 설정 초기화</button>
     <div class="list-group list-group-flush border-bottom scrollarea">
     <ul class="content">
     
@@ -231,6 +145,8 @@
             , mapOptions );
    }//end Map
    
+
+   
   $(document).ready(function(){
    
 	var planUL = $(".content")
@@ -254,8 +170,10 @@
 		showList();
 		clickedButton.hide();
 	 })
-	 
    })
+   
+ 
+   
    
    //이벤트 위임?
    $(document).on("click", ".deleteBtn", function(e) {
@@ -291,7 +209,20 @@
 		   
 	   })
    } //End showList
-   
+   $(".dropBtn").on("click", function(e){
+	   console.log("drop...")
+	   
+	 var plan_id = $(this).val();
+	   
+	   console.log(plan_id)
+	   
+	   planService.drop(plan_id, function(result){
+		 console.log(result)
+		 showList()
+		 
+		   
+	   })
+   })
 
    
    

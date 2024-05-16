@@ -22,4 +22,8 @@ where t.plan_id = #{plan_id}
 <delete id="deleteContent">
 delete from travelcontent where tcontent_id = #{tcontent_id}
 </delete>
+
+<delete id="deleteContentAll">
+delete from travelcontent where plan_id = #{plan_id}
+</delete>
 </mapper>

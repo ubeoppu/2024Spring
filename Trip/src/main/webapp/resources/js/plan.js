@@ -70,10 +70,36 @@
 		
 		   
 	   }
+
+       function drop(plan_id, callback, error){
+        console.log("plan_id" + plan_id)
+
+        var plan_id = plan_id;
+
+        $.ajax({
+            type:"delete",
+            url:"/plan/drop/" + plan_id,
+            
+            success:function(result, status, xhr){
+                if(callback){
+                    callback(result)
+                }
+            },
+            error:function(xhr, status, err){
+                if(error){
+                    error();
+                }
+            }
+        })
+
+
+       }
+
 	   return {
 	   insert:insert,
        getList:getList,
-       deleted:deleted
+       deleted:deleted,
+       drop:drop
 	   }
 	   })();
 	   

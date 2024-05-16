@@ -40,5 +40,11 @@ public class PlanServiceImpl implements PlanService{
 	public int deleteContent(int tContent_id) {
 		return mapper.deleteContent(tContent_id);
 	}
+
+	@Override
+	public int deleteContentAll(int plan_id) {
+		log.info("drop" + plan_id);
+		return mapper.deleteContentAll(plan_id);
+	}
 	
 }

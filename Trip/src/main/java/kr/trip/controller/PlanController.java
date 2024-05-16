@@ -68,6 +68,16 @@ public class PlanController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 	
+	@ResponseBody
+	@DeleteMapping(value="/drop/{plan_id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<String>drop(@PathVariable("plan_id")int plan_id){
+		
+		log.info("drop.."+plan_id);
+		
+		return service.deleteContentAll(plan_id) != 0 ? new ResponseEntity<String>("result", HttpStatus.OK) :
+			                                            new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
 
 	
 	

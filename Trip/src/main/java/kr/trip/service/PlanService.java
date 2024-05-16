@@ -13,4 +13,6 @@ public interface PlanService {
 	public List<ContentVO>getListContent(int plan_id);
 	
 	public int deleteContent(int tContent_id);
+	
+	public int deleteContentAll(int plan_id);
 }
