@@ -6,4 +6,20 @@
 <select id="getContentAreaList" resultType="kr.trip.domain.ContentVO">
 SELECT * FROM content WHERE areaname = #{areaname}
 </select>
+
+<insert id="insertTravelContent">
+INSERT INTO travelContent (plan_id, content_id, day, time) VALUES(#{plan_id}, #{content_id}, #{day}, #{time})
+</insert>
+
+<select id="getListContent" resultType="kr.trip.domain.ContentVO">
+<![CDATA[
+select t.tContent_id, c.content_id, c.addr1, c.addr2, c.phone, c.cExplain, c.areaname, c.contentType, c.likeNum, c.image1, c.mapx, c.mapy, c.maplevel from content c join travelcontent t 
+on c.content_id = t.content_id
+where t.plan_id = #{plan_id}
+]]>
+</select>
+
+<delete id="deleteContent">
+delete from travelcontent where tcontent_id = #{tcontent_id}
+</delete>
 </mapper>

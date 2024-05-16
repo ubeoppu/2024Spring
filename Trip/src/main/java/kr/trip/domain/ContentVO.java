@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /*content_id	varchar(100)
 addr1	varchar(100)
@@ -20,10 +21,9 @@ image1	longblob
 mapx	varchar(200)
 mapy	varchar(200)
 maplevel	varchar(20)*/
-@Setter
-@Getter
-@AllArgsConstructor
+@Data
 public class ContentVO {
+	private int tcontent_id;
 	private String content_id;
 	private String addr1;
 	private String addr2;
