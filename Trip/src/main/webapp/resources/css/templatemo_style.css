@@ -588,6 +588,7 @@ hr {
 }
 
 .portfolio-item {
+	cursor: pointer;
   margin-bottom: 30px;
 }
 .portfolio-item .portfolio-thumb {

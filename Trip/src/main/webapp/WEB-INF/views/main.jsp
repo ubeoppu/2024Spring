@@ -207,7 +207,7 @@
                         <div class="portfolio-thumb">
                             <img src="/resources/images/gallery/수원.jpg" alt="">
                             <h1 class="text-sm font-medium truncate md:text-2xl font-Montserrat">SUWON</h1>
-<h2 class="mb-2 text-xs font-thin truncate md:text-sm">대한민국 수원</h2>
+<h2  class="mb-2 text-xs font-thin truncate md:text-sm">대한민국 수원</h2>
                         </div> <!-- /.portfolio-thumb -->
                     </div> <!-- /.portfolio-item -->
                                            <div class="portfolio-item col-md-3 col-sm-7">
@@ -310,7 +310,19 @@
         <script src="/resources/js/bootstrap.js"></script>
         <script src="/resources/js/plugins.js"></script>
         <script src="/resources/js/main.js"></script>
-
+        <script>
+        $(document).ready(function(){
+        	
+        	$(".portfolio-thumb").on("click", function(){
+        		console.log("테스트입니다")
+        		
+        		 var locationText = $(this).next(".mb-2.text-xs.font-thin.truncate.md\\:text-sm").text();
+        		
+        		console.log(locationText);
+        	})
+        	
+        });
+        </script>
   
         <!-- templatemo 406 flex -->
     </body>

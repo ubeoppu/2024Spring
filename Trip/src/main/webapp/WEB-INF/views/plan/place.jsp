@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+   
+   <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!doctype html>
 <html lang="en">
   <head>
@@ -20,9 +22,9 @@
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-    #place, #place2{
-    display:none;
-    }
+    
+    #day{
+    display:none;}
     
     #sleep, #sleep2{
     display:none;}
@@ -95,6 +97,16 @@ input[type="text"] {
       </li>
     </ul>
   </div>
+
+<!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 -->
+<div id ="day">
+<div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+<h1>${areaname }</h1>
+<h5><fmt:formatDate value="${start }" pattern="yyyy-MM-dd(E)"/> ~ <fmt:formatDate value="${end }" pattern="yyyy-MM-dd(E)"/></h5>
+</div>
+</div>
+
+<!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End -->
 
 <!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 -->
 <div id ="place">
@@ -487,6 +499,7 @@ input[type="text"] {
                 str += "<input name='content_id_c" + i + "' value='" + list[i].content_id + "' style='border:none;'>";
                 str += "<input name='contentType_c" + i + "' value='" + list[i].contentType + "' style='border:none;'>";
                 str += "<input name='addr2_c" + i + "' value='" + list[i].addr2 + "' style='border:none;'>";
+                str += "<input type='time' name='contentTime' value='02:00'>";
                 str += "<button class='deleteBtn' data-index='" + i + "'>삭제</button>";
                 str += "</div>";
             }
@@ -546,13 +559,31 @@ input[type="text"] {
 
         }
          
+         $(".step1").on("click", function(){
+
+             var dayElement = document.getElementById("day");
+             var placeElement = document.getElementById("place");
+             var placeElement2 = document.getElementById("place2");
+             var sleepElement = document.getElementById("sleep");
+             var sleepElement2 = document.getElementById("sleep2");
+             
+             dayElement.style.display ="block";
+             placeElement.style.display = "none";
+             placeElement2.style.display = "none"; 
+             sleepElement.style.display = "none";
+             sleepElement2.style.display = "none";
+         })
+         
+         
          $(".step2").on("click", function(){
         console.log('테스트1');	 
+        var dayElement = document.getElementById("day");
         var placeElement = document.getElementById("place");
         var placeElement2 = document.getElementById("place2");
         var sleepElement = document.getElementById("sleep");
         var sleepElement2 = document.getElementById("sleep2");
 
+        dayElement.style.display ="none";
         placeElement.style.display = "block";
         placeElement2.style.display = "block"; 
         sleepElement.style.display = "none";
@@ -561,11 +592,13 @@ input[type="text"] {
          
          $(".step3").on("click", function(){
         	 console.log("테스트2")
+             var dayElement = document.getElementById("day");
              var placeElement = document.getElementById("place");
              var placeElement2 = document.getElementById("place2");
              var sleepElement = document.getElementById("sleep"); 
              var sleepElement2 = document.getElementById("sleep2");
 
+             dayElement.style.display ="none";
              placeElement.style.display = "none";
              placeElement2.style.display = "none"; 
              sleepElement.style.display = "block";
