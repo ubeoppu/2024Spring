@@ -29,8 +29,9 @@ public class PlanController {
 	private final PlanService service;
 	
 	
-	@GetMapping("/plan1")
-	public void plan1(Model model) {
+	@GetMapping("/place")
+	public void plan2(Model model) {
+		log.info("테스트 내용" + service.getContentAreaList("경주"));
 	model.addAttribute("list",service.getContentAreaList("경주"));
 	model.addAttribute("areaname", "경주");
 	}
@@ -54,19 +55,6 @@ public class PlanController {
 			                                             new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ResponseBody
-	@GetMapping(value="/content/{plan_id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<ContentVO>>getContent(
-			@PathVariable("plan_id")int plan_id
-			){
-		log.info("getContent.." + plan_id);
-		
-		List<ContentVO> result = service.getListContent(plan_id);
-		
-		log.info("getResult" + result);
-		
-		return new ResponseEntity<>(result, HttpStatus.OK);
-	}
 	
 	@ResponseBody
 	@DeleteMapping(value="/drop/{plan_id}", produces = {MediaType.APPLICATION_JSON_VALUE})

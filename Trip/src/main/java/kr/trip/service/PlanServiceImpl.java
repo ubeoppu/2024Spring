@@ -30,11 +30,6 @@ public class PlanServiceImpl implements PlanService{
 		return mapper.insertTravelContent(vo);
 	}
 
-	@Override
-	public List<ContentVO> getListContent(int plan_id) {
-		log.info("service"+plan_id);
-		return mapper.getListContent(plan_id);
-	}
 
 	@Override
 	public int deleteContent(int tContent_id) {
