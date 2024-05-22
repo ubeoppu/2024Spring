@@ -19,12 +19,15 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../resources/css/modal.css" rel="stylesheet">
+    <link href="../resources/css/modal2.css" rel="stylesheet">
+    <link href="../resources/css/calender.css" rel="stylesheet">
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
     
-    #day{
+    #place, #place2{
     display:none;}
+    
     
     #sleep, #sleep2{
     display:none;}
@@ -51,6 +54,12 @@
 input[type="text"] {
     height: 30px; /* 원하는 높이 값으로 조정 */
 }
+
+#timeSet > li {
+display:inline-block;}
+
+.set{
+display:inline-block;}
     </style>
 
     
@@ -97,17 +106,47 @@ input[type="text"] {
       </li>
     </ul>
   </div>
+<!-- modal -->
 
+<!-- modalEnd -->
 <!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 -->
 <div id ="day">
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
-<h1>${areaname }</h1>
-<h5><fmt:formatDate value="${start }" pattern="yyyy-MM-dd(E)"/> ~ <fmt:formatDate value="${end }" pattern="yyyy-MM-dd(E)"/></h5>
+<h2 style="font-weight:bold;">${areaname }</h2>
+<h5 id="dateRange" style="font-weight:bold;"></h5>
+
+<h6>여행시간 상세설정</h6>
+<p class="set">일자</p>
+<ul id="date1">
+<ins id="date2"></ins>
+</ul>
+<p class="set">요일</p>
+<ul id="timeset">
+</ul>
+<p class="set">시작시간</p>
+<ul id="timeset">
+</ul>
+<p class="set">종료시간</p>
+<ul id="timeset">
+</ul>
+
 </div>
+<div class="modal-container">
+  <input id="modal-toggle" type="checkbox">
+  <label class="selectDayBtn" for="modal-toggle">일정 수정하기</label> 
+  <label class="modal-backdrop" for="modal-toggle"></label>
+  <div class="modal-content">
+    <label class="modal-close" for="modal-toggle">&#x2715;</label>
+    <h2>여행 기간을 선택해주세요</h2><hr />
+    <!-- 달력 추가 -->
+<div id="app"></div>
+
+<!-- 달력 끝 -->
+  </div>          
+</div>  
 </div>
 
 <!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End -->
-
 <!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 -->
 <div id ="place">
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
@@ -165,7 +204,7 @@ input[type="text"] {
       width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">여행지 선택</span>
     </a>
-    <button class="dropBtn">장소 설정 초기화</button>
+    <button class="dropBtn" onclick="dropMarker">장소 설정 초기화</button>
          <div class="chooseContent" style="border:1px;">
          </div>
   </div>
@@ -176,6 +215,7 @@ input[type="text"] {
   <div id="sleep">
     <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
       <span class="fs-5 fw-semibold">숙소 선택</span>
+      
       <div class="pac-card" id="pac-controls">
          <div>
             <div id="title">
@@ -228,7 +268,8 @@ input[type="text"] {
  <div id="sleep2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 선택</span>
+      <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 선택 </span>
+      <span class="fs-5 fw-semibold" id="daysdiff" style="margin-top:5px; padding-top:10px;"></span>
     </a>
          <div class="chooseAccommodation" style="border:1px;">
          </div>
@@ -268,158 +309,386 @@ input[type="text"] {
     <script src="../resources/js/bootstrap.bundle.min.js"></script>
 
       <script src="../resources/js/sidebars.js"></script>
+      <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<!-- React DOM -->
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   </body>
+  <script>
+  window.addEventListener('DOMContentLoaded', function() {
+	    var modalToggle = document.getElementById('modal-toggle');
+	    modalToggle.checked = true; // 모달 창 체크 박스를 선택하여 모달이 열리도록 설정
+	  });
+  </script>
+<script>
+/*Selector Range*/
+class Range extends React.Component {
+    constructor(props) {
+        super(props);
+        this.monthNames = ["1월", "2월", "3월", "4월", "5월", "6월",
+            "7월", "8월", "9월", "10월", "11월", "12월"];
+        this.daysNames = ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'];
+    }
+    dateInfo(date){
+        let dateRow;
+        let rangeMonthText = 'Choose a date';
+        if(date){
+            dateRow = React.createElement('td', { rowSpan: '2' }, React.createElement('span', { className: 'calendar__range-date' }, date.getDate()));
+            rangeMonthText = this.monthNames[date.getMonth()]+' '+ date.getFullYear();
+        }
+        return (
+            React.createElement('tr', null,
+                dateRow,
+                React.createElement('td', null,
+                    React.createElement('span', { className: "calendar__range-month" },
+                        rangeMonthText
+                    )
+                )
+            )
+        );
+    }
+    dumbDate(date, title){
+        let day = (date)?(React.createElement('tr', null,
+            React.createElement('td', null,
+                React.createElement('span', { className: 'calendar__range-day' }, this.daysNames[date.getDay()])
+            )
+        )):null;
+        return (React.createElement('div', { className: 'calendar__from-date' },
+            React.createElement('table', null,
+                React.createElement('tbody', null,
+                    React.createElement('tr', null,
+                        React.createElement('td', { colSpan: '2' },
+                            React.createElement('span', { className: 'calendar__range-h' }, title)
+                        )
+                    ),
+                    this.dateInfo(date),
+                    day
+                )
+            )
+        ));
+        console.log(day)
+        console.log(date)
+    }
+    render() {
+        let {dateFrom, dateTo} = this.props;
+        dateTo = dateTo ? new Date(dateTo) : dateTo;
+        dateFrom = dateFrom ? new Date(dateFrom) : dateFrom;
+        return (React.createElement('div', { className: 'calendar__range' },
+            this.dumbDate(dateFrom,'시작 날'),
+            React.createElement('div', { className: 'calendar__image-arrow' },
+                React.createElement('span', null, "\u2192")
+            ),
+            this.dumbDate(dateTo,'마지막 날')
+        ));
+    }
+}
+/*Header Table*/
+class Header extends React.Component {
+    constructor(props) {
+        super(props);
+        this.monthNames = ["1월", "2월", "3월", "4월", "5월", "6월",
+            "7월", "8월", "9월", "10월", "11월", "12월"];
+        this.dayNames = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+    }
+    shouldComponentUpdate(nextProps){
+        return nextProps.date != this.props.date;
+    }
+    render() {
+        let date  = new Date(this.props.date);
+        return (React.createElement('div', { className: 'calendar__header' },
+            React.createElement('div', { className: 'calendar__month-chooser' },
+                React.createElement('span', { className: 'calendar__prev-month', onClick: this.props.prevMonth }, "\u2B80"),
+                React.createElement('span', null, this.monthNames[date.getMonth()]),
+                React.createElement('span', { className: 'calendar__next-month', onClick: this.props.nextMonth }, "\u27A1")
+            ),
+            React.createElement('table', { className: 'calendar__days-names', cellSpacing: '0' },
+                React.createElement('tbody', null,
+                    React.createElement('tr', null,
+                        this.dayNames.map((i, key)=> React.createElement('td', { className: 'calendar__day-name', key: key }, i))
+                    )
+                )
+            )
+        ));
+    }
+}
+
+/*Calendar Table*/
+/*Calendar Table*/
+class Calendar extends React.Component{
+    constructor(props){
+        super(props);
+        this.selectionEnabled = false;
+        this.shortMonthNames = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec']
+        this.currentDate = new Date();
+        this.state = {
+            animationDirection: "forward" // animationDirection 초기화
+        };
+    }
+    handleClick(index){
+        let {setRange, indexStart, indexEnd} = this.props;
+        if(this.selectionEnabled ){
+            if((index == indexStart)){
+                this.selectionEnabled = false;
+                setRange();
+            }else{
+                this.selectionEnabled = false;
+                setRange(this.props.indexStart, index);
+            }
+        }else{
+            if(index == indexEnd){
+                this.selectionEnabled = true;
+            }else{
+                this.selectionEnabled = true;
+                setRange(index);
+            }
+        }
+    }
+    mouseOver(index){
+        if(this.selectionEnabled){
+            this.props.setRange(this.props.indexStart, index);
+        }
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.animationDirection !== this.props.animationDirection) { // 수정
+            const calendar = document.querySelector('.calendar__table');
+            const { animationDirection } = this.props; // 수정
+
+            if (animationDirection === 'forward') {
+                calendar.classList.add('animate--forward');
+                calendar.classList.remove('animate--backward');
+            } else if (animationDirection === 'backward') {
+                calendar.classList.add('animate--backward');
+                calendar.classList.remove('animate--forward');
+            }
+        }
+    }
+    getDay(date, key, month){
+        let time = date.getTime();
+        let currentDate = this.currentDate;
+        let {indexEnd, indexStart} = this.props;
+        let dayClass = (time > indexStart && time < indexEnd) ? 'selected' : '';
+        dayClass += ( date < currentDate.setHours(0)) ?' out--range':'';
+        dayClass += (time == indexStart && indexEnd > indexStart) ? ' sel--start' : '';
+        dayClass += (time == indexEnd && time > indexStart) ? ' sel--end' : '';
+        dayClass += (date.getMonth() == month)?' calendar__day':' calendar__day dis';
+        return(React.createElement('td', { className: dayClass,
+            onClick: this.handleClick.bind(this, time),
+            onMouseOver: this.mouseOver.bind(this,time),
+            key: key },
+            React.createElement('div', { className: 'calendar__inner-day' }, date.getDate())
+        ));
+    }
+    render(){
+        let date  = new Date(this.props.date);
+        let month = date.getMonth();
+        date.setDate(1);
+        if(this.animationDirection == "forward"){
+            date.setMonth(date.getMonth() - 1);
+        }
+        let firstDay = date.getDay();
+        if(firstDay !== 1){
+            (firstDay == 0)?
+                date.setDate(date.getDate() - 6)
+                :date.setDate(date.getDate() - (firstDay - 1));
+        }
+        date.setDate(date.getDate() - 1);
+        return(React.createElement('div', { className: 'calendar__wrap' },
+            React.createElement('table', { className: 'calendar__table', ref: 'calendar', key: this.props.date, cellSpacing: '0' },
+                React.createElement('tbody', null,
+                    Array(12).fill(0).map((i, key)=> {
+                        return React.createElement('tr', { key: key },
+                            Array(7).fill(0).map((_i, _key)=> {
+                                date.setDate(date.getDate() + 1);
+                                return this.getDay(date, _key, month);
+                            })
+                        );
+                    })
+                )
+            )
+        ));
+    }
+}
+
+
+/*Smart Component*/
+class APP extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            date:Date.now(),
+            selectionStart: 0,
+            selectionEnd: 0
+        }
+    }
+    prevMonth(){
+        let date = new Date(this.state.date);
+        date.setMonth(date.getMonth() - 1);
+        this.setState({date:date.getTime()});
+    }
+    nextMonth(){
+        let date = new Date(this.state.date);
+        date.setMonth(date.getMonth() + 1);
+        this.setState({date:date.getTime()});
+    }
+    setRange(selectionStart = 0, selectionEnd = 0){
+    	
+        this.setState({selectionStart, selectionEnd});
+
+    }  handleDaySelection() {
+        let { selectionStart, selectionEnd } = this.state;
+        console.log("시작 날" + selectionStart);
+        console.log("끝나는 날" + selectionEnd);
+        // 여기에 선택한 날짜로 할 일을 추가하세요
+    }
+    render(){
+
+        let {date, selectionStart, selectionEnd} = this.state;
+        return (React.createElement('div', { className: 'calendar' },
+            React.createElement(Range, { dateFrom: selectionStart, dateTo: selectionEnd }),
+            React.createElement(Header, { date: date, prevMonth: this.prevMonth.bind(this), nextMonth: this.nextMonth.bind(this) }),
+            React.createElement(Calendar, { date: date, indexStart: selectionStart, indexEnd: selectionEnd, setRange: this.setRange.bind(this) }),
+              React.createElement('button', { id: 'selectDay', onClick: this.handleDaySelection.bind(this) }, '선택한 날짜 확인')
+        ));
+    }
+    
+}
+
+ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
+</script>
    <script>
-  function myMap() {
-      const myLatLng = { lat: 35.8473612313022, lng: 129.218053667485 };
+   function myMap() {
+       const myLatLng = { lat: 35.8473612313022, lng: 129.218053667485 };
 
-      var marker;
-      var deleteButtons = document.querySelectorAll('.deleteBtn');
-      
-      var map = new google.maps.Map(document.getElementById("googleMap"), {
-          zoom: 14,
-          center: myLatLng
-      });
+       var marker;
+       var label;
+       var flightPath;
+       
+       var map = new google.maps.Map(document.getElementById("googleMap"), {
+         zoom: 14,
+         center: myLatLng
+       });
 
-      var geocoder = new google.maps.Geocoder();
+       var geocoder = new google.maps.Geocoder();
 
-      console.log('지도 진입');
+       console.log('지도 진입');
 
-      document.body.addEventListener('click', function (event) {
-          if (event.target && event.target.matches('.checkBtn')) {
-              console.log('버튼 클릭 이벤트 실행');
-              var addr2Input = event.target.previousElementSibling;
-              console.log('이건 됨?')
-              if (addr2Input) {
-                  var address = addr2Input.value;
-                  console.log('입력된 주소:', address);
-                  geocodeAddress(geocoder, map, address);
-              }
-          }
-          
-      });
-      
-      const labels = "123456789";
-      let labelIndex = 0;
-      
-      function geocodeAddress(geocoder, resultMap, address) {
-          console.log('지오코딩 함수 실행');
+       document.body.addEventListener('click', function (event) {
+         if (event.target && event.target.matches('.checkBtn')) {
+           console.log('버튼 클릭 이벤트 실행');
+           var addr2Input = event.target.previousElementSibling;
+           console.log('이건 됨?')
+           if (addr2Input) {
+             var address = addr2Input.value;
+             console.log('입력된 주소:', address);
+             geocodeAddress(geocoder, map, address);
+           }
+         }
 
-          geocoder.geocode({ 'address': address }, function (result, status) {
-              console.log('지오코딩 결과:', result);
-              console.log('지오코딩 상태:', status);
+         if (event.target && event.target.matches(".deleteBtn")) {
+           console.log("삭제 버튼 동작");
+           var index = parseInt(event.target.getAttribute('data-index'), 10);
+           deleteMarker(index);
+         }
 
-              if (status === 'OK') {
-                  resultMap.setCenter(result[0].geometry.location);
-                  resultMap.setZoom(18);
-                  var image ={
-                        url: "../resources/image/주석_2024-05-21_153140-removebg-preview.png", // 아이콘 이미지 경로
-                          scaledSize: new google.maps.Size(55, 55), // 아이콘 크기 설정 (가로, 세로)
-                        
-                  }
-                 
-                  marker = new google.maps.Marker({
-                      map: resultMap,
-                      position: result[0].geometry.location,
-                      icon : image,
-                      label: {
-                         text: labels[labelIndex++ % labels.length],
-                          fontSize : "30px",
-                          fontWeight : "bold",
-                          color: '#ffffff',
-                          labelOrigin: new google.maps.Point(30, 30)
-                      }
-                  });
+       });
 
-                  console.log('위도:', marker.position.lat());
-                  console.log('경도:', marker.position.lng());
-                  
-                  
-              } else {
-                  alert('지오코드가 다음의 이유로 성공하지 못했습니다: ' + status);
-              }
-          });
-      }
-      
-      var card = document.getElementById('pac-card');
-      var input = document.getElementById('pac-input');
-      var types = document.getElementById('type-selector');
-      var strictBounds = document.getElementById('strict-bounds-selector');
+       const labels = "123456789";
+       let labelIndex = 0;
+       var markers = [];
 
-      map.controls[google.maps.ControlPosition.TOP_CENTER].push(card);
+       function geocodeAddress(geocoder, resultMap, address) {
+         console.log('지오코딩 함수 실행');
 
-      var autocomplete = new google.maps.places.Autocomplete(input);
+         geocoder.geocode({ 'address': address }, function (result, status) {
+           console.log('지오코딩 결과:', result);
+           console.log('지오코딩 상태:', status);
 
-      autocomplete.bindTo('bounds', map);
-      autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+           if (status === 'OK') {
+             resultMap.setCenter(result[0].geometry.location);
+             resultMap.setZoom(18);
+             var image = {
+               url: "../resources/image/주석_2024-05-21_153140-removebg-preview.png", // 아이콘 이미지 경로
+               scaledSize: new google.maps.Size(55, 55), // 아이콘 크기 설정 (가로, 세로)
 
-      var infowindow = new google.maps.InfoWindow();
-      var infowindowContent = document.getElementById('infowindow-content');
-      infowindow.setContent(infowindowContent);
+             }
 
-      var marker = new google.maps.Marker({
-          map: map,
-          anchorPoint: new google.maps.Point(0, -29)
-      });
+             marker = new google.maps.Marker({
+               map: resultMap,
+               position: result[0].geometry.location,
+               icon: image,
+               label: {
+                 text: (markers.length+1).toString(),
+                 fontSize: "30px",
+                 fontWeight: "bold",
+                 color: '#ffffff',
+                 labelOrigin: new google.maps.Point(30, 30)
+               }
+             });
 
-      autocomplete.addListener('place_changed', function () {
-          infowindow.close();
-          marker.setVisible(false);
-          var place = autocomplete.getPlace();
-          if (!place.geometry) {
-              window.alert("상세 정보가 없습니다. '" + place.name + "'");
-              return;
-          }
+             markers.push(marker);
 
-          if (place.geometry.viewport) {
-              map.fitBounds(place.geometry.viewport);
-          } else {
-              map.setCenter(place.geometry.location);
-              map.setZoom(17);
-          }
-          marker.setPosition(place.geometry.location);
-          marker.setVisible(true);
+             console.log('위도:', marker.position.lat());
+             console.log('경도:', marker.position.lng());
 
-          document.getElementById('latclick').value = marker.getPosition().lat();
-          document.getElementById('lngclick').value = marker.getPosition().lng();
+             updatePolyline();
 
-          var address = '';
-          if (place.address_components) {
-              address = [
-                  (place.address_components[0] && place.address_components[0].short_name || ''),
-                  (place.address_components[1] && place.address_components[1].short_name || ''),
-                  (place.address_components[2] && place.address_components[2].short_name || '')
-              ].join('  ');
-          }
+           } else {
+             alert('지오코드가 다음의 이유로 성공하지 못했습니다: ' + status);
+           }
+         });
+       }
 
-          document.getElementById("address").value = address;
-          document.getElementById("place_name").value = place.name;
 
-          infowindowContent.children['place-icon'].src = place.icon;
-          infowindowContent.children['place-name'].textContent = place.name;
-          infowindowContent.children['place-address'].textContent = address;
-          infowindow.open(map, marker);
-      });
 
-      function setupClickListener(id, types) {
-          var radioButton = document.getElementById(id);
-          radioButton.addEventListener('click', function () {
-              autocomplete.setTypes(types);
-          });
-      }
+       function updatePolyline() {
+         console.log("update")
+         var path = markers.map(marker => marker.getPosition());
 
-      setupClickListener('changetype-all', []);
-      setupClickListener('changetype-address', ['address']);
-      setupClickListener('changetype-establishment', ['establishment']);
-      setupClickListener('changetype-geocode', ['geocode']);
+         console.log("path 값 : ", markers);
 
-      document.getElementById('use-strict-bounds').addEventListener('click', function () {
-          console.log("Checkbox clicked new state = " + this.checked);
-          autocomplete.setOptions({ strictBounds: this.checked });
-      });
-  }
+         if (flightPath) {
+             flightPath.setMap(null);
+           }
+         
+         flightPath = new google.maps.Polyline({
+           path: path,
+           geodesic: true,
+           strokeColor: "#FF0000",
+           strokeOpacity: 1.0,
+           strokeWeight: 2
+         });
 
-  document.addEventListener('DOMContentLoaded', myMap);
+         flightPath.setMap(map);
+       }
+
+       function deleteMarker(index) {
+         if (markers[index]) {
+           markers[index].setMap(null);
+           markers.splice(index, 1);
+           relabelMarkers();
+           updatePolyline();
+         }
+       }
+       
+       function dropMarker(){
+    	   for (let i = 0; i < markers.length; i++) {
+   		    deleteMarker(i);
+   	  }
+       }
+
+       function relabelMarkers(){
+          markers.forEach((marker, i) => {
+             marker.setLabel({
+                text:(i+1).toString(),
+                fontSize: "30px",
+                  fontWeight: "bold",
+                  color: '#ffffff',
+                  labelOrigin: new google.maps.Point(30, 30)
+             })
+          })
+       }
+     }
+
+     document.addEventListener('DOMContentLoaded', myMap);
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -510,6 +779,7 @@ input[type="text"] {
     	  console.log("작동은 하니?")
     	list.splice(0, list.length);
     	  updateHtml();
+    	  
     	  
       });
 
@@ -604,6 +874,78 @@ input[type="text"] {
              sleepElement.style.display = "block";
              sleepElement2.style.display = "block";
          })
+         
+         $("#selectDay").on("click", function(){
+        	 var appComponent = ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
+        	    var selectionStart = appComponent.state.selectionStart;
+        	    var selectionEnd = appComponent.state.selectionEnd;
+        	    console.log("끝" + selectionEnd)
+        	    console.log("시작" + selectionStart)
+        	    var milliseconds = selectionStart;
+        	    var startDate = new Date(milliseconds);
+        	    console.log(startDate);
+        	    
+        	    var milliseconds = selectionEnd;
+        	    var endDate = new Date(milliseconds);
+        	    console.log("포맷 전"+ endDate);
+        	    
+        	    var startDateFormatted = formatDate(startDate);
+        	    var endDateFormatted = formatDate(endDate);
+        	    
+        	    const datesBetween = getDatesWithDay(startDate, endDate);
+        	    console.log(datesBetween);
+        	    
+        	    var dateStr ="";
+        	    for(var i = 0; i < datesBetween; i++){
+        	    	dateStr += "<li>" + date + "</li>";
+        	    }
+        	    
+        	    
+
+        	    
+        	    var startMillis = startDate.getTime();
+        	    var endMillis = endDate.getTime();
+
+        	    var timeDiff = Math.abs(endMillis - startMillis);
+        	    
+        	    //숙소 개수 정할 때
+        	    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+        	    //총 일 수
+        	   var totalDays = daysDiff + 1;
+        	    
+        	    console.log('사이 날짜 값'+ daysDiff)
+        	    
+        	    console.log('총 일 수 ' + totalDays)
+        	    
+        	    $("#daysdiff").text("총 숙박 날" + daysDiff + "일");
+        	    
+        	    $("#dateRange").text(startDateFormatted + " ~ " + endDateFormatted);
+        	 
+        	    $('#modal-toggle').prop('checked', false);
+         })
+         
+         function formatDate(date) {
+    var year = date.getFullYear();
+    var month = ("0" + (date.getMonth() + 1)).slice(-2);
+    var day = ("0" + date.getDate()).slice(-2);
+    var dayOfWeek = ["일", "월", "화", "수", "목", "금", "토"][date.getDay()];
+    return year + "-" + month + "-" + day + "(" + dayOfWeek + ")";
+}
+         
+         function getDatesWithDay(startDate, endDate) {
+        	    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+        	    const dates = [];
+        	    let currentDate = new Date(startDate);
+
+        	    while (currentDate < endDate) {
+        	        const dateStr = currentDate.toISOString().slice(0, 10);
+        	        const dayOfWeek = daysOfWeek[currentDate.getDay()];
+        	        dates.push({ date: dateStr, dayOfWeek: dayOfWeek });
+        	        currentDate.setDate(currentDate.getDate() + 1);
+        	    }
+
+        	    return dates;
+        	}
    })
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-nI2V_bsNjQF5ZQ4mlq8o8sr1oZ6bLi0&libraries=places&callback=myMap"></script>

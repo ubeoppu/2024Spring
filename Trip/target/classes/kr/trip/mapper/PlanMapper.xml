@@ -19,4 +19,8 @@ delete from travelcontent where tcontent_id = #{tcontent_id}
 <delete id="deleteContentAll">
 delete from travelcontent where plan_id = #{plan_id}
 </delete>
+
+<select id="getAreaContent" resultType="kr.trip.domain.AreaVO">
+select * from area where areaname = #{areaname}
+</select>
 </mapper>

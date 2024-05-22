@@ -6,6 +6,7 @@ import org.apache.maven.doxia.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.trip.domain.AreaVO;
 import kr.trip.domain.ContentVO;
 import kr.trip.domain.TravelContentVO;
 import kr.trip.mapper.PlanMapper;
@@ -40,6 +41,12 @@ public class PlanServiceImpl implements PlanService{
 	public int deleteContentAll(int plan_id) {
 		log.info("drop" + plan_id);
 		return mapper.deleteContentAll(plan_id);
+	}
+
+	@Override
+	public AreaVO getAreaContent(String areaname) {
+		log.info(areaname);
+		return mapper.getAreaContent(areaname);
 	}
 	
 }

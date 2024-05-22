@@ -18,6 +18,7 @@ http://www.templatemo.com/tm-406-flex
         <link rel="stylesheet" href="/resources/css/animate.css">
         <link rel="stylesheet" href="/resources/css/templatemo_misc.css">
         <link rel="stylesheet" href="/resources/css/templatemo_style.css">
+        <link rel="stylesheet" href="/resources/css/modal1.css">
 
         <script src="/resources/js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
     </head>

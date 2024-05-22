@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.trip.domain.AreaVO;
 import kr.trip.domain.TravelContentVO;
 import kr.trip.service.PlanService;
 import lombok.RequiredArgsConstructor;
@@ -31,20 +32,19 @@ public class PlanController {
 	 
 	
 	@GetMapping("/place")
-	public void plan2(Model model) {
-		String start = "2024/05/28";
-		String End = "2024/05/30";
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-		 try {
-			Date startDate = formatter.parse(start);
-			Date endDate = formatter.parse(End);
-			model.addAttribute("start", startDate);
-			model.addAttribute("end", endDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	model.addAttribute("list",service.getContentAreaList("경주"));
-	model.addAttribute("areaname", "경주");
+	public void plan2(String areaname,Model model) {
+		log.info("과연"+ areaname);
+	model.addAttribute("list",service.getContentAreaList(areaname));
+	model.addAttribute("areaname", areaname);
+	}
+	
+	@ResponseBody
+	@GetMapping(value="/getArea/{areaname}", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<AreaVO>getAreaContent(@PathVariable("areaname")String areaname){
+		log.info("컨트롤러 받은 값" + areaname);
+		AreaVO vo = service.getAreaContent(areaname);
+		log.info(vo);
+		return new ResponseEntity<AreaVO>(vo, HttpStatus.OK);
 	}
 	
 	@ResponseBody
