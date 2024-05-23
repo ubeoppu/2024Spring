@@ -35,6 +35,7 @@ public class PlanController {
 	public void plan2(String areaname,Model model) {
 		log.info("과연"+ areaname);
 	model.addAttribute("list",service.getContentAreaList(areaname));
+	model.addAttribute("sleep", service.getAccommodationList(areaname));
 	model.addAttribute("areaname", areaname);
 	}
 	

@@ -17,4 +17,6 @@ public interface PlanService {
 	public int deleteContentAll(int plan_id);
 	
 	public AreaVO getAreaContent(String areaname);
+	
+	public List<ContentVO>getAccommodationList(String areaname);
 }

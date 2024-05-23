@@ -23,4 +23,8 @@ delete from travelcontent where plan_id = #{plan_id}
 <select id="getAreaContent" resultType="kr.trip.domain.AreaVO">
 select * from area where areaname = #{areaname}
 </select>
+
+<select id="getAccommodationList" resultType="kr.trip.domain.ContentVO">
+select * from content where contentType = '숙소' AND areaname = #{areaname}
+</select>
 </mapper>

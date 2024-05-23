@@ -48,5 +48,9 @@ public class PlanServiceImpl implements PlanService{
 		log.info(areaname);
 		return mapper.getAreaContent(areaname);
 	}
+
+	public List<ContentVO> getAccommodationList(String areaname) {
+		return mapper.getAccommodationList(areaname);
+	}
 	
 }

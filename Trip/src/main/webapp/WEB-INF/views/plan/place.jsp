@@ -60,6 +60,26 @@ display:inline-block;}
 
 .set{
 display:inline-block;}
+
+.timeSetter{
+display:inline-block;}
+
+ul ,li , ins {
+    text-decoration: none; /* 밑줄 제거 */
+    list-style-type: none;
+    /* 다른 스타일 적용 */
+}
+ul , li{
+width:80px;
+}
+li{
+display:inline-block;}
+
+#day{width:500px;}
+
+#timeInput{
+width:115px;
+}
     </style>
 
     
@@ -111,29 +131,35 @@ display:inline-block;}
 <!-- modalEnd -->
 <!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 -->
 <div id ="day">
+
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
 <h2 style="font-weight:bold;">${areaname }</h2>
 <h5 id="dateRange" style="font-weight:bold;"></h5>
 
-<h6>여행시간 상세설정</h6>
+<div class="timeSetter">
+<h6>여행시간 상세설정</h6><label class="selectDayBtn" for="modal-toggle"><input type="text" class="totalTime" value="총시간" readonly="readonly" style="border: none; width:300px;"><br>  일정 수정하기</label> <br>
 <p class="set">일자</p>
-<ul id="date1">
-<ins id="date2"></ins>
+<ul class="timeset">
+<ins class="date2"></ins>
 </ul>
 <p class="set">요일</p>
-<ul id="timeset">
+<ul class="timeset">
+<ins class="date3"></ins>
 </ul>
 <p class="set">시작시간</p>
-<ul id="timeset">
+<ul class="timeset">
+<ins class="date4"></ins>
 </ul>
 <p class="set">종료시간</p>
-<ul id="timeset">
+<ul class="timeset">
+<ins class="date5"></ins>
 </ul>
-
+<button class="timeSetBtn">시간 설정 완료</button>
+</div>
 </div>
 <div class="modal-container">
   <input id="modal-toggle" type="checkbox">
-  <label class="selectDayBtn" for="modal-toggle">일정 수정하기</label> 
+  
   <label class="modal-backdrop" for="modal-toggle"></label>
   <div class="modal-content">
     <label class="modal-close" for="modal-toggle">&#x2715;</label>
@@ -202,7 +228,7 @@ display:inline-block;}
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" 
       width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">여행지 선택</span>
+      <span id="totalRunTime"></span>
     </a>
     <button class="dropBtn" onclick="dropMarker">장소 설정 초기화</button>
          <div class="chooseContent" style="border:1px;">
@@ -250,14 +276,14 @@ display:inline-block;}
          <span id="place-address"></span>
       </div>
       <div class="list-group list-group-flush border-bottom scrollarea" >
-      <c:forEach var="content" items="${list}">
+      <c:forEach var="content" items="${sleep}">
          <div class="d-flex w-100 align-items-center justify-content-between">
          <hr>
-         <c:if test="${content.contentType == '숙박시설'}">
+         <c:if test="${content.contentType == '숙소'}">
          <b><button class="contentNameBtn" style="width:100px;" data-content-id="${content.content_id}">${content.content_id}</button></b>
          <input class="contentType" type="text" data-content-type="${content.contentType}" value="${content.contentType}" readonly="readonly">
         <br><input id="addr2" class="contentAdd" type="text" data-content-addr2="${content.addr2}" value="${content.addr2}" readonly="readonly">
-         <button type="button" id="checkBtn" class="checkBtn" >+</button>
+         <button type="button" class="checkInBtn" class="checkInBtn" >+</button>
          <hr>
          </c:if>
       </div>
@@ -271,7 +297,7 @@ display:inline-block;}
       <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 선택 </span>
       <span class="fs-5 fw-semibold" id="daysdiff" style="margin-top:5px; padding-top:10px;"></span>
     </a>
-         <div class="chooseAccommodation" style="border:1px;">
+         <div class="chooseSleep" style="border:1px;">
          </div>
   </div>
   <!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End -->
@@ -313,6 +339,8 @@ display:inline-block;}
 <!-- React DOM -->
 <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
   </body>
+  
+  
   <script>
   window.addEventListener('DOMContentLoaded', function() {
 	    var modalToggle = document.getElementById('modal-toggle');
@@ -569,22 +597,17 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 
        var geocoder = new google.maps.Geocoder();
 
-       console.log('지도 진입');
 
        document.body.addEventListener('click', function (event) {
          if (event.target && event.target.matches('.checkBtn')) {
-           console.log('버튼 클릭 이벤트 실행');
            var addr2Input = event.target.previousElementSibling;
-           console.log('이건 됨?')
            if (addr2Input) {
              var address = addr2Input.value;
-             console.log('입력된 주소:', address);
              geocodeAddress(geocoder, map, address);
            }
          }
 
          if (event.target && event.target.matches(".deleteBtn")) {
-           console.log("삭제 버튼 동작");
            var index = parseInt(event.target.getAttribute('data-index'), 10);
            deleteMarker(index);
          }
@@ -596,11 +619,8 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
        var markers = [];
 
        function geocodeAddress(geocoder, resultMap, address) {
-         console.log('지오코딩 함수 실행');
 
          geocoder.geocode({ 'address': address }, function (result, status) {
-           console.log('지오코딩 결과:', result);
-           console.log('지오코딩 상태:', status);
 
            if (status === 'OK') {
              resultMap.setCenter(result[0].geometry.location);
@@ -626,8 +646,6 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 
              markers.push(marker);
 
-             console.log('위도:', marker.position.lat());
-             console.log('경도:', marker.position.lng());
 
              updatePolyline();
 
@@ -640,10 +658,8 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 
 
        function updatePolyline() {
-         console.log("update")
          var path = markers.map(marker => marker.getPosition());
 
-         console.log("path 값 : ", markers);
 
          if (flightPath) {
              flightPath.setMap(null);
@@ -668,12 +684,6 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
            updatePolyline();
          }
        }
-       
-       function dropMarker(){
-    	   for (let i = 0; i < markers.length; i++) {
-   		    deleteMarker(i);
-   	  }
-       }
 
        function relabelMarkers(){
           markers.forEach((marker, i) => {
@@ -693,72 +703,83 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script type="text/javascript">
+
    $(document).ready(function(){
 
+	    var totalHour = 0;
+	    var totalMinute = 0;
          var list = [];
-         
+         var daysDiff = 0;
+         var sleepName = [];
       $(".checkBtn").on("click",function(e){
          
          var content_id = $(this).siblings().find(".contentNameBtn").text();
          var contentType = $(this).siblings(".contentType").data("content-type");
          var addr2 = $(this).siblings(".contentAdd").data("content-addr2");
+         var playTime = $(".contentTime").val();
+         console.log("content_id값" + content_id)
          
-         
-         console.log(content_id);
-         console.log(contentType);
-         console.log(addr2);
-         
-         console.log("진입");
-         
+          if(playTime === null || playTime === "" || playTime === undefined){
+        	  playTime = "02:00";
+          } 
+         console.log('playTime if문 거친 후' + playTime)
          list.push({
             content_id : content_id,
             contentType : contentType,
-            addr2 : addr2
+            addr2 : addr2,
+            playTime : playTime
          })
-         
          $(".chooseContent").find("input[name='content_id_c']").val(content_id);
          $(".chooseContent").find("input[name='contentType_c']").val(contentType);
          $(".chooseContent").find("input[name='addr2_c']").val(addr2);
+         $(".chooseContent").find("input[name='contentTime']").val(playTime)
          
          
          updateHtml();
          
+         $(".contentTime").on("change", function() {
+        	 RunTimeCalculate();
+	        });
          
-         
-      /*    for(var i=0; i<8; i++){
-            if(i >= 8){
-               alert("하루 일정은 8개까지 등록 가능합니다!");
-            }
-            
-         }
-         ChooseUrl.html(str); */
-         
-         /* var content_id_c = $(".chooseContent").find("input[name='content_id_c']");
-         var contentType_c = $(".chooseContent").find("input[name='contentType_c']");
-         var addr2_c = $(".chooseContent").find("input[name='addr2_c']");
-         
-         content_id_c.val(content_id);
-         contentType_c.val(contentType);
-         addr2_c.val(addr2); */
-         
-         
-         //전달 값 저장 리스트 출력
-         /*  $.ajax({
-              url : '/plan/choose',
-              type : 'post',
-                data: {
-                   plan_id : plan_id,
-                   content_id : content_id
-                },
-                success: function(response) {
-                    console.log(response);
-                    // 모달 닫기
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                }
-           }); //End Ajax   */
+         RunTimeCalculate();
       })
+      
+     function RunTimeCalculate() {
+    var runTime = document.getElementsByClassName('contentTime');
+    var totalMinutes = 0;
+
+    for (var i = 0; i < runTime.length; i++) {
+        var timeValue = runTime[i].value;
+        console.log("runTime " + i + "번째 value: " + timeValue);
+        totalMinutes += convertToMinutes(timeValue);
+    }
+    
+    var totalTime = convertToHoursMinutes(totalMinutes);
+    console.log("총합 시간: " + totalTime.hours + "시간 " + totalTime.minutes + "분");
+
+    if (totalTime.hours > totalHour) {
+        alert("여행 총 시간보다 장소의 총 시간이 클 수 없습니다");
+    } else {
+        var str = "<p id='runCount'>" + runTime.length + "</p>&nbsp;&nbsp;" + totalTime.hours + "시간 " + totalTime.minutes + "분 / " + totalHour + "시간 " + totalMinute + "분";
+        document.getElementById("totalRunTime").innerHTML = str;
+    }
+}
+
+// Helper functions
+function convertToMinutes(time) {
+    var parts = time.split(':');
+    var hours = parseInt(parts[0]);
+    var minutes = parseInt(parts[1]);
+    return (hours * 60) + minutes;
+}
+
+function convertToHoursMinutes(totalMinutes) {
+    var hours = Math.floor(totalMinutes / 60);
+    var minutes = totalMinutes % 60;
+    return { hours: hours, minutes: minutes };
+}
+
+      
    
       function updateHtml() {
             var str = "";
@@ -768,11 +789,18 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
                 str += "<input name='content_id_c" + i + "' value='" + list[i].content_id + "' style='border:none;'>";
                 str += "<input name='contentType_c" + i + "' value='" + list[i].contentType + "' style='border:none;'>";
                 str += "<input name='addr2_c" + i + "' value='" + list[i].addr2 + "' style='border:none;'>";
-                str += "<input type='time' name='contentTime' value='02:00'>";
+                console.log('playTime값 2번 체크' + list[i].playTime)
+                if(list[i].playTime === "" || list[i].playTime === null || list[i].playTime === undefined){
+                	console.log('트루문 찍힘')
+                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='02:00' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";
+                }else{
+                	console.log('false문 찍힘')
+                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ list[i].playTime +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
                 str += "<button class='deleteBtn' data-index='" + i + "'>삭제</button>";
                 str += "</div>";
             }
             $(".chooseContent").html(str);
+            console.log('list길이값' + list.length)
         }
       
       $(document).on("click", ".dropBtn", function(){
@@ -873,8 +901,9 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
              placeElement2.style.display = "none"; 
              sleepElement.style.display = "block";
              sleepElement2.style.display = "block";
+             updateSleep()
          })
-         
+         var datesBetween;
          $("#selectDay").on("click", function(){
         	 var appComponent = ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
         	    var selectionStart = appComponent.state.selectionStart;
@@ -892,37 +921,148 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
         	    var startDateFormatted = formatDate(startDate);
         	    var endDateFormatted = formatDate(endDate);
         	    
-        	    const datesBetween = getDatesWithDay(startDate, endDate);
+        	    datesBetween = getDatesWithDay(startDate, endDate);
         	    console.log(datesBetween);
         	    
         	    var dateStr ="";
-        	    for(var i = 0; i < datesBetween; i++){
-        	    	dateStr += "<li>" + date + "</li>";
+        	    for(var i = 0; i < datesBetween.length; i++){
+        	    	dateStr += "<li>" + datesBetween[i].date + "</li>";
         	    }
+        	    $(".date2").html(dateStr);
         	    
+        	    console.log("date확인" + datesBetween)
         	    
-
+        	    var dateStr2 = "";
+        	    for(var i = 0; i < datesBetween.length; i++){
+        	    	dateStr2 += "<li>" + datesBetween[i].dayOfWeek + "</li>";
+        	    }
+        	    $(".date3").html(dateStr2);
         	    
+        	    var dateStr3 = "";
+        	    for(var i = 0; i < datesBetween.length; i++){
+        	    	dateStr3 += "<li><input type = 'time' value='10:00' class='timeInputStart"+ i + "'></li>";
+        	    }
+        	    $(".date4").html(dateStr3)
+        	    
+        	    	var dateStr4 = "";
+            	    for(var i = 0; i < datesBetween.length; i++){
+            	    	dateStr4 += "<li><input type='time' value='22:00' class='timeInputEnd" + i + "'></li>";
+            	    }
+            	$(".date5").html(dateStr4);
+            	
         	    var startMillis = startDate.getTime();
         	    var endMillis = endDate.getTime();
 
         	    var timeDiff = Math.abs(endMillis - startMillis);
         	    
         	    //숙소 개수 정할 때
-        	    var daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
+        	     daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24)); 
         	    //총 일 수
         	   var totalDays = daysDiff + 1;
         	    
         	    console.log('사이 날짜 값'+ daysDiff)
         	    
         	    console.log('총 일 수 ' + totalDays)
+        	    timeCalculate(datesBetween)
+        	     for (var i = 0; i < datesBetween.length; i++) {
+        	    (function(index) {
+        	        var selector = ".timeInputStart" + index;
+        	        var selector2 = ".timeInputEnd" + index;
+        	        $(selector).on("change", function() {
+        	        	timeCalculate()
+        	        });
+        	        
+        	        $(selector2).on("change", function(){
+        	        	timeCalculate()
+        	        });
+        	        
+        	    })(i);
+        	}
         	    
         	    $("#daysdiff").text("총 숙박 날" + daysDiff + "일");
         	    
         	    $("#dateRange").text(startDateFormatted + " ~ " + endDateFormatted);
-        	 
+        	    console.log('이쪽까지 동작을 안하나요')
         	    $('#modal-toggle').prop('checked', false);
          })
+         
+        function timeCalculate() {
+
+    for (var i = 0; i < datesBetween.length; i++) {
+        var startTime = $(".timeInputStart" + i).val();
+        var endTime = $(".timeInputEnd" + i).val();
+
+        var startParts = startTime.split(':');
+        var endParts = endTime.split(':');
+        var startHour = parseInt(startParts[0]);
+        var startMinute = parseInt(startParts[1]);
+        var endHour = parseInt(endParts[0]);
+        var endMinute = parseInt(endParts[1]);
+
+        // 시간 차이 계산
+        var diffHour = endHour - startHour;
+        var diffMinute = endMinute - startMinute;
+
+        // 음수 방지를 위한 보정
+        if (diffMinute < 0) {
+            diffHour--; // 시간을 1 시간 감소
+            diffMinute += 60; // 음수를 방지하기 위해 분에 60을 더함
+        }
+
+        totalHour += diffHour;
+        totalMinute += diffMinute;
+    }
+
+    console.log("총합 시간: " + totalHour);
+    console.log("총합 분: " + totalMinute);
+
+    // 분이 60 이상인 경우 시간으로 환산
+    totalHour += Math.floor(totalMinute / 60);
+    totalMinute %= 60;
+
+    console.log("총합 시간 (조정): " + totalHour);
+    console.log("총합 분 (조정): " + totalMinute);
+    
+    $(".totalTime").val("총시간 " + totalHour + "시간 " + totalMinute + "분 입니다.");    
+    
+    
+    
+}
+         $(".checkInBtn").on("click",function(){
+        	 
+        	 var content_id = $(this).siblings().find(".contentNameBtn").text();
+        	 
+        	 console.log('content_id 숙소 값' + content_id)
+        	 sleepName.push({
+        		content_id : content_id || undefined
+        	 })
+        	 for(var i = 0; i < sleepName.length; i++){
+        	 console.log('sleepName배열' + sleepName[i].content_id)
+        	 }
+        	 updateSleep()
+        	 
+         })
+         
+         
+        function updateSleep(){
+        	 console.log('updateSleep')
+        	 var str = "";
+        	 console.log("확인 1번 값" + daysDiff)
+        	 console.log("확인 2번 값" + datesBetween[0].date)
+        	 for(var i = 0; i < daysDiff; i++){
+        		 var q = i + 1;
+        		 console.log('되겠죠'+ q)
+        		 console.log("안찍혀 이게?")
+        		 str += "<div class='sleepItem'>";
+        		 str += q + " " + datesBetween[i].date + "("+ datesBetween[i].dayOfWeek +")~" + datesBetween[q].date + "("+ datesBetween[q].dayOfWeek +")";
+        		 if(sleepName[i] === undefined || sleepName[i].content_id === undefined){
+        			 console.log('true문 통과')
+        			 str += "<input type ='text' value='숙소를 추가해주세요.'>"	 
+        		 }else{
+        		 str += "<input type ='text' value='"+ sleepName[i].content_id +"'>"}
+        	 }$(".chooseSleep").html(str);
+         }
+        
          
          function formatDate(date) {
     var year = date.getFullYear();
@@ -933,19 +1073,22 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 }
          
          function getDatesWithDay(startDate, endDate) {
-        	    const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
-        	    const dates = [];
-        	    let currentDate = new Date(startDate);
+             const daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+             const dates = [];
+             let currentDate = new Date(startDate);
 
-        	    while (currentDate < endDate) {
-        	        const dateStr = currentDate.toISOString().slice(0, 10);
-        	        const dayOfWeek = daysOfWeek[currentDate.getDay()];
-        	        dates.push({ date: dateStr, dayOfWeek: dayOfWeek });
-        	        currentDate.setDate(currentDate.getDate() + 1);
-        	    }
+             while (currentDate <= new Date(endDate)) {
+            	 const isoString = currentDate.toISOString();
+            	 const monthDayStr = isoString.slice(5, 7) + "/" + isoString.slice(8, 10); // 월과 일만 추출하여 /로 구분
+                 const dayOfWeek = daysOfWeek[currentDate.getDay()];
+                 dates.push({ date: monthDayStr, dayOfWeek: dayOfWeek });
+                 currentDate.setDate(currentDate.getDate() + 1);
+             }
 
-        	    return dates;
-        	}
+             return dates;
+         }
+         
+         
    })
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-nI2V_bsNjQF5ZQ4mlq8o8sr1oZ6bLi0&libraries=places&callback=myMap"></script>

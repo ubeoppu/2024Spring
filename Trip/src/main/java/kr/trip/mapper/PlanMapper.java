@@ -12,6 +12,7 @@ public interface PlanMapper {
 	
 	public int insertTravelContent(TravelContentVO vo);
 	
+	public List<ContentVO>getAccommodationList(String areaname);
 	
 	public int deleteContent(int tContent_id);
 	
