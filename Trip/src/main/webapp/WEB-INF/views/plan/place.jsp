@@ -177,6 +177,8 @@ width:115px;
 <div id ="place">
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
       <span class="fs-5 fw-semibold">${areaname }</span>
+                  <input type="hidden" id="lat" name="lat" value="${area.lat}">
+            <input type="hidden" id="lng" name="lng"  value="${area.lng}">
       <div class="pac-card" id="pac-controls">
          <div>
             <div id="title">
@@ -230,7 +232,6 @@ width:115px;
       width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
       <span id="totalRunTime"></span>
     </a>
-    <button class="dropBtn" onclick="dropMarker">장소 설정 초기화</button>
          <div class="chooseContent" style="border:1px;">
          </div>
   </div>
@@ -335,9 +336,8 @@ width:115px;
     <script src="../resources/js/bootstrap.bundle.min.js"></script>
 
       <script src="../resources/js/sidebars.js"></script>
-      <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-<!-- React DOM -->
-<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
   </body>
   
   
@@ -584,121 +584,140 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 </script>
    <script>
    function myMap() {
-       const myLatLng = { lat: 35.8473612313022, lng: 129.218053667485 };
+		
+ 	  var lat = parseFloat(document.getElementById("lat").value);
+ 	  var lng = parseFloat(document.getElementById("lng").value);
+ 	  
+ 	  console.log(lat);
+ 	  console.log(lng);
+ 	  
+     const myLatLng = { lat: lat, lng: lng};
 
-       var marker;
-       var label;
-       var flightPath;
-       
-       var map = new google.maps.Map(document.getElementById("googleMap"), {
-         zoom: 14,
-         center: myLatLng
-       });
+     var marker;
+     var label;
+     var flightPath;
+     
+     var map = new google.maps.Map(document.getElementById("googleMap"), {
+       zoom:11,
+       center: myLatLng
+     });
 
-       var geocoder = new google.maps.Geocoder();
+     var geocoder = new google.maps.Geocoder();
 
+     console.log('지도 진입');
 
-       document.body.addEventListener('click', function (event) {
-         if (event.target && event.target.matches('.checkBtn')) {
-           var addr2Input = event.target.previousElementSibling;
-           if (addr2Input) {
-             var address = addr2Input.value;
-             geocodeAddress(geocoder, map, address);
+     document.body.addEventListener('click', function (event) {
+       if (event.target && event.target.matches('.checkBtn')) {
+         console.log('버튼 클릭 이벤트 실행');
+         var addr2Input = event.target.previousElementSibling;
+         console.log('이건 됨?')
+         if (addr2Input) {
+           var address = addr2Input.value;
+           console.log('입력된 주소:', address);
+           geocodeAddress(geocoder, map, address);
+         }
+       }
+
+       if (event.target && event.target.matches(".deleteBtn")) {
+         console.log("삭제 버튼 동작");
+         var index = parseInt(event.target.getAttribute('data-index'), 10);
+         deleteMarker(index);
+       }
+
+     });
+
+     const labels = "123456789";
+     let labelIndex = 0;
+     var markers = [];
+
+     function geocodeAddress(geocoder, resultMap, address) {
+       console.log('지오코딩 함수 실행');
+
+       geocoder.geocode({ 'address': address }, function (result, status) {
+         console.log('지오코딩 결과:', result);
+         console.log('지오코딩 상태:', status);
+
+         if (status === 'OK') {
+           resultMap.setCenter(result[0].geometry.location);
+           resultMap.setZoom(18);
+           var image = {
+             url: "../resources/image/주석_2024-05-21_153140-removebg-preview.png", // 아이콘 이미지 경로
+             scaledSize: new google.maps.Size(55, 55), // 아이콘 크기 설정 (가로, 세로)
+
            }
-         }
 
-         if (event.target && event.target.matches(".deleteBtn")) {
-           var index = parseInt(event.target.getAttribute('data-index'), 10);
-           deleteMarker(index);
-         }
-
-       });
-
-       const labels = "123456789";
-       let labelIndex = 0;
-       var markers = [];
-
-       function geocodeAddress(geocoder, resultMap, address) {
-
-         geocoder.geocode({ 'address': address }, function (result, status) {
-
-           if (status === 'OK') {
-             resultMap.setCenter(result[0].geometry.location);
-             resultMap.setZoom(18);
-             var image = {
-               url: "../resources/image/주석_2024-05-21_153140-removebg-preview.png", // 아이콘 이미지 경로
-               scaledSize: new google.maps.Size(55, 55), // 아이콘 크기 설정 (가로, 세로)
-
+           marker = new google.maps.Marker({
+             map: resultMap,
+             position: result[0].geometry.location,
+             icon: image,
+             label: {
+               text: (markers.length+1).toString(),
+               fontSize: "30px",
+               fontWeight: "bold",
+               color: '#ffffff',
+               labelOrigin: new google.maps.Point(30, 30)
              }
+           });
 
-             marker = new google.maps.Marker({
-               map: resultMap,
-               position: result[0].geometry.location,
-               icon: image,
-               label: {
-                 text: (markers.length+1).toString(),
-                 fontSize: "30px",
-                 fontWeight: "bold",
-                 color: '#ffffff',
-                 labelOrigin: new google.maps.Point(30, 30)
-               }
-             });
+           markers.push(marker);
 
-             markers.push(marker);
+           console.log('위도:', marker.position.lat());
+           console.log('경도:', marker.position.lng());
 
-
-             updatePolyline();
-
-           } else {
-             alert('지오코드가 다음의 이유로 성공하지 못했습니다: ' + status);
-           }
-         });
-       }
-
-
-
-       function updatePolyline() {
-         var path = markers.map(marker => marker.getPosition());
-
-
-         if (flightPath) {
-             flightPath.setMap(null);
-           }
-         
-         flightPath = new google.maps.Polyline({
-           path: path,
-           geodesic: true,
-           strokeColor: "#FF0000",
-           strokeOpacity: 1.0,
-           strokeWeight: 2
-         });
-
-         flightPath.setMap(map);
-       }
-
-       function deleteMarker(index) {
-         if (markers[index]) {
-           markers[index].setMap(null);
-           markers.splice(index, 1);
-           relabelMarkers();
            updatePolyline();
-         }
-       }
 
-       function relabelMarkers(){
-          markers.forEach((marker, i) => {
-             marker.setLabel({
-                text:(i+1).toString(),
-                fontSize: "30px",
-                  fontWeight: "bold",
-                  color: '#ffffff',
-                  labelOrigin: new google.maps.Point(30, 30)
-             })
-          })
+         } else {
+           alert('지오코드가 다음의 이유로 성공하지 못했습니다: ' + status);
+         }
+       });
+     }
+
+
+
+     function updatePolyline() {
+       console.log("update")
+       var path = markers.map(marker => marker.getPosition());
+
+       console.log("path 값 : ", markers);
+
+       if (flightPath) {
+           flightPath.setMap(null);
+         }
+       
+       flightPath = new google.maps.Polyline({
+         path: path,
+         geodesic: true,
+         strokeColor: "#FF0000",
+         strokeOpacity: 1.0,
+         strokeWeight: 2
+       });
+
+       flightPath.setMap(map);
+     }
+
+     function deleteMarker(index) {
+       if (markers[index]) {
+         markers[index].setMap(null);
+         markers.splice(index, 1);
+         relabelMarkers();
+         updatePolyline();
        }
      }
 
-     document.addEventListener('DOMContentLoaded', myMap);
+     function relabelMarkers(){
+     	markers.forEach((marker, i) => {
+     		marker.setLabel({
+     			text:(i+1).toString(),
+     			fontSize: "30px",
+     	        fontWeight: "bold",
+     	        color: '#ffffff',
+     	        labelOrigin: new google.maps.Point(30, 30)
+     		})
+     	})
+     }
+   }
+
+   document.addEventListener('DOMContentLoaded', myMap);
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -706,8 +725,8 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
 
    $(document).ready(function(){
 
-	    var totalHour = 0;
-	    var totalMinute = 0;
+	   var totalMinute = 0;
+	   var totalHour = 0;
          var list = [];
          var daysDiff = 0;
          var sleepName = [];
@@ -718,6 +737,8 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
          var addr2 = $(this).siblings(".contentAdd").data("content-addr2");
          var playTime = $(".contentTime").val();
          console.log("content_id값" + content_id)
+         
+         console.log('플레이 타임의 값' + playTime)
          
           if(playTime === null || playTime === "" || playTime === undefined){
         	  playTime = "02:00";
@@ -734,27 +755,43 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
          $(".chooseContent").find("input[name='addr2_c']").val(addr2);
          $(".chooseContent").find("input[name='contentTime']").val(playTime)
          
-         
          updateHtml();
-         
+         RunTimeSet();
+         RunTimeCalculate();
          $(".contentTime").on("change", function() {
+        	 RunTimeCalculate();
+        	 RunTimeSet();
         	 RunTimeCalculate();
 	        });
          
-         RunTimeCalculate();
       })
+      var totalRunTimes = [];
+      function RunTimeSet(){
+    	  totalRunTimes=[];
+    	  $(".contentTime").each(function() {
+        	  
+    		    totalRunTimes.push($(this).val());
+    		    
+    		    for(var i = 0; i < totalRunTimes.length; i++){
+    		    	console.log('전체 런타임'	+totalRunTimes[i])
+    		    }
+    		    
+    		});
+    	  
+    	  
+      }
       
      function RunTimeCalculate() {
     var runTime = document.getElementsByClassName('contentTime');
     var totalMinutes = 0;
-
+    var totalTime = 0;
     for (var i = 0; i < runTime.length; i++) {
         var timeValue = runTime[i].value;
         console.log("runTime " + i + "번째 value: " + timeValue);
         totalMinutes += convertToMinutes(timeValue);
     }
     
-    var totalTime = convertToHoursMinutes(totalMinutes);
+    totalTime = convertToHoursMinutes(totalMinutes);
     console.log("총합 시간: " + totalTime.hours + "시간 " + totalTime.minutes + "분");
 
     if (totalTime.hours > totalHour) {
@@ -790,12 +827,12 @@ function convertToHoursMinutes(totalMinutes) {
                 str += "<input name='contentType_c" + i + "' value='" + list[i].contentType + "' style='border:none;'>";
                 str += "<input name='addr2_c" + i + "' value='" + list[i].addr2 + "' style='border:none;'>";
                 console.log('playTime값 2번 체크' + list[i].playTime)
-                if(list[i].playTime === "" || list[i].playTime === null || list[i].playTime === undefined){
+                if(totalRunTimes[i] === "" || totalRunTimes[i] === null || totalRunTimes[i] === undefined){
                 	console.log('트루문 찍힘')
                 str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='02:00' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";
                 }else{
                 	console.log('false문 찍힘')
-                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ list[i].playTime +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
+                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ totalRunTimes[i] +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
                 str += "<button class='deleteBtn' data-index='" + i + "'>삭제</button>";
                 str += "</div>";
             }
@@ -814,7 +851,10 @@ function convertToHoursMinutes(totalMinutes) {
         $(document).on("click", ".deleteBtn", function() {
             var index = $(this).data("index");
             list.splice(index, 1);
+            totalRunTimes.splice(index, 1);
             updateHtml();
+            RunTimeCalculate();
+            
         });
       
       var modal = $(".modal");
@@ -987,11 +1027,15 @@ function convertToHoursMinutes(totalMinutes) {
          })
          
         function timeCalculate() {
+        	 totalHour = 0;
+        	 totalMinute = 0;
 
     for (var i = 0; i < datesBetween.length; i++) {
         var startTime = $(".timeInputStart" + i).val();
         var endTime = $(".timeInputEnd" + i).val();
-
+        console.log('테스트 시작' + startTime)
+        console.log('테스트 끝' + endTime)
+        
         var startParts = startTime.split(':');
         var endParts = endTime.split(':');
         var startHour = parseInt(startParts[0]);
@@ -999,10 +1043,15 @@ function convertToHoursMinutes(totalMinutes) {
         var endHour = parseInt(endParts[0]);
         var endMinute = parseInt(endParts[1]);
 
+        
         // 시간 차이 계산
         var diffHour = endHour - startHour;
         var diffMinute = endMinute - startMinute;
 
+        console.log('시간 차' + diffHour)
+        console.log('diffMinute값' +diffMinute )
+        
+        
         // 음수 방지를 위한 보정
         if (diffMinute < 0) {
             diffHour--; // 시간을 1 시간 감소
@@ -1023,7 +1072,7 @@ function convertToHoursMinutes(totalMinutes) {
     console.log("총합 시간 (조정): " + totalHour);
     console.log("총합 분 (조정): " + totalMinute);
     
-    $(".totalTime").val("총시간 " + totalHour + "시간 " + totalMinute + "분 입니다.");    
+    $(".totalTime").val("총시간 " + totalHour + "시간 " + totalMinute + "분 입니다.");  
     
     
     
@@ -1060,9 +1109,19 @@ function convertToHoursMinutes(totalMinutes) {
         			 str += "<input type ='text' value='숙소를 추가해주세요.'>"	 
         		 }else{
         		 str += "<input type ='text' value='"+ sleepName[i].content_id +"'>"}
+        		 str += "<button class ='deleteBtn2'>삭제</button></div>"
+        		 
         	 }$(".chooseSleep").html(str);
          }
         
+         $(".chooseSleep").on("click", ".deleteBtn2", function(){
+        	 console.log('숙소 삭제')
+        	sleepName = [];
+        	updateSleep();
+        	 
+         })
+        	 
+        	 
          
          function formatDate(date) {
     var year = date.getFullYear();
