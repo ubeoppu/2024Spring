@@ -14,6 +14,14 @@ public class AreaVO {
 	
 	private String voltage;
 	
+	private String timediff;
+	
+	private String cat1_id;
+	
+	private String lat;
+	
+	private String lng;
+	
 	
 
 }

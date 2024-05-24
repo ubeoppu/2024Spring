@@ -28,6 +28,13 @@
     #place, #place2{
     display:none;}
     
+    #place {position:relative; padding-right:10px;}
+    
+    #place2 {position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
+    
+    #sleep{position:relative; padding-right:10px;}
+    
+    #sleep2{position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
     
     #sleep, #sleep2{
     display:none;}
@@ -124,11 +131,19 @@ width:115px;
           <svg class="bi" width="24" height="24" role="img" aria-label="Customers"><use xlink:href="#people-circle"/></svg>
         </a>
       </li>
+      <li>
+      </li>
+      <li>
+      </li>
+      <li>
+      <button class = "objsubmit">일정생성</button>
+      </li>
     </ul>
   </div>
 <!-- modal -->
 
 <!-- modalEnd -->
+<form id ="places" action="/plan/library" method="get">
 <!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 --><!-- 날짜 선택 -->
 <div id ="day">
 
@@ -225,8 +240,8 @@ width:115px;
       </c:forEach>
       </div>
   </div>
-  </div>
- <div id="place2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
+  
+  <div id="place2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" 
       width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
@@ -235,6 +250,8 @@ width:115px;
          <div class="chooseContent" style="border:1px;">
          </div>
   </div>
+  </div>
+ 
  
   <!-- 장소 선택End --><!-- 장소 선택End --><!-- 장소 선택End --><!-- 장소 선택End --><!-- 장소 선택End --><!-- 장소 선택End -->
   
@@ -291,8 +308,7 @@ width:115px;
       </c:forEach>
       </div>
   </div>
-  </div>
- <div id="sleep2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
+  <div id="sleep2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
     <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
       <svg class="bi me-2" width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
       <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 선택 </span>
@@ -301,7 +317,10 @@ width:115px;
          <div class="chooseSleep" style="border:1px;">
          </div>
   </div>
+  </div>
+ 
   <!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End --><!-- 숙소 선택End -->
+  </form>
   <!-- The Modal -->
   <div class="modal" id="myModal">
     <div class="modal-dialog">
@@ -574,7 +593,8 @@ class APP extends React.Component {
             React.createElement(Range, { dateFrom: selectionStart, dateTo: selectionEnd }),
             React.createElement(Header, { date: date, prevMonth: this.prevMonth.bind(this), nextMonth: this.nextMonth.bind(this) }),
             React.createElement(Calendar, { date: date, indexStart: selectionStart, indexEnd: selectionEnd, setRange: this.setRange.bind(this) }),
-              React.createElement('button', { id: 'selectDay', onClick: this.handleDaySelection.bind(this) }, '선택한 날짜 확인')
+              React.createElement('button', { id: 'selectDay',type:'button', onClick: this.handleDaySelection.bind(this) }, '선택한 날짜 확인')
+              
         ));
     }
     
@@ -730,6 +750,7 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
          var list = [];
          var daysDiff = 0;
          var sleepName = [];
+         
       $(".checkBtn").on("click",function(e){
          
          var content_id = $(this).siblings().find(".contentNameBtn").text();
@@ -750,10 +771,10 @@ ReactDOM.render(React.createElement(APP, null), document.querySelector('#app'));
             addr2 : addr2,
             playTime : playTime
          })
-         $(".chooseContent").find("input[name='content_id_c']").val(content_id);
-         $(".chooseContent").find("input[name='contentType_c']").val(contentType);
-         $(".chooseContent").find("input[name='addr2_c']").val(addr2);
-         $(".chooseContent").find("input[name='contentTime']").val(playTime)
+          $(".chooseContent").find("input[name='content_id_c']").val(content_id);
+         $(".chooseContent").find("input[name='contentName']").val(contentType);
+         $(".chooseContent").find("input[name='contentTypes']").val(addr2);
+         $(".chooseContent").find("input[name='contentTime']").val(playTime) 
          
          updateHtml();
          RunTimeSet();
@@ -823,18 +844,18 @@ function convertToHoursMinutes(totalMinutes) {
             for (var i = 0; i < list.length; i++) {
                 str += "<div class='contentItem'>";
                 str += "<input name='c_number' value='" + (i + 1) + "' style='width:20px; background-color:skyblue;'>";
-                str += "<input name='content_id_c" + i + "' value='" + list[i].content_id + "' style='border:none;'>";
-                str += "<input name='contentType_c" + i + "' value='" + list[i].contentType + "' style='border:none;'>";
-                str += "<input name='addr2_c" + i + "' value='" + list[i].addr2 + "' style='border:none;'>";
+                str += "<input name='contentName"  + "' value='" + list[i].content_id + "' style='border:none;'>";
+                str += "<input name='contentTypes" + "' value='" + list[i].contentType + "' style='border:none;'>";
+                str += "<input name='address"  + "' value='" + list[i].addr2 + "' style='border:none;'>";
                 console.log('playTime값 2번 체크' + list[i].playTime)
                 if(totalRunTimes[i] === "" || totalRunTimes[i] === null || totalRunTimes[i] === undefined){
                 	console.log('트루문 찍힘')
-                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='02:00' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";
+                str += "<input type='text' name='playTime' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='02:00' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";
                 }else{
                 	console.log('false문 찍힘')
-                str += "<input type='text' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ totalRunTimes[i] +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
+                str += "<input type='text' name='playTime' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ totalRunTimes[i] +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
                 str += "<button class='deleteBtn' data-index='" + i + "'>삭제</button>";
-                str += "</div>";
+                str += "</div>";	
             }
             $(".chooseContent").html(str);
             console.log('list길이값' + list.length)
@@ -966,7 +987,7 @@ function convertToHoursMinutes(totalMinutes) {
         	    
         	    var dateStr ="";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr += "<li>" + datesBetween[i].date + "</li>";
+        	    	dateStr += "<li><input type ='text' name ='day' value='" + datesBetween[i].date + "'></li>";
         	    }
         	    $(".date2").html(dateStr);
         	    
@@ -974,19 +995,19 @@ function convertToHoursMinutes(totalMinutes) {
         	    
         	    var dateStr2 = "";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr2 += "<li>" + datesBetween[i].dayOfWeek + "</li>";
+        	    	dateStr2 += "<li><input type='text' name='dayOfWeek' value='" + datesBetween[i].dayOfWeek + "'></li>";
         	    }
         	    $(".date3").html(dateStr2);
         	    
         	    var dateStr3 = "";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr3 += "<li><input type = 'time' value='10:00' class='timeInputStart"+ i + "'></li>";
+        	    	dateStr3 += "<li><input type = 'time' name='startTime' value='10:00' class='timeInputStart"+ i + "'></li>";
         	    }
         	    $(".date4").html(dateStr3)
         	    
         	    	var dateStr4 = "";
             	    for(var i = 0; i < datesBetween.length; i++){
-            	    	dateStr4 += "<li><input type='time' value='22:00' class='timeInputEnd" + i + "'></li>";
+            	    	dateStr4 += "<li><input type='time' name='endTime' value='22:00' class='timeInputEnd" + i + "'></li>";
             	    }
             	$(".date5").html(dateStr4);
             	
@@ -1108,7 +1129,7 @@ function convertToHoursMinutes(totalMinutes) {
         			 console.log('true문 통과')
         			 str += "<input type ='text' value='숙소를 추가해주세요.'>"	 
         		 }else{
-        		 str += "<input type ='text' value='"+ sleepName[i].content_id +"'>"}
+        		 str += "<input type ='text' name='sleepName' value='"+ sleepName[i].content_id +"'>"}
         		 str += "<button class ='deleteBtn2'>삭제</button></div>"
         		 
         	 }$(".chooseSleep").html(str);
@@ -1147,9 +1168,23 @@ function convertToHoursMinutes(totalMinutes) {
              return dates;
          }
          
+         $(".objsubmit").on("click", function(){
+        	 console.log('작동')
+        	 let placesForm = $("#places"); 
+        	 
+        	 placesForm.submit();
+        	 
+        	
          
+         
+ 
+         
+         
+  
    })
-</script>
+   
+   })
+   </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-nI2V_bsNjQF5ZQ4mlq8o8sr1oZ6bLi0&libraries=places&callback=myMap"></script>
   
 </html>
