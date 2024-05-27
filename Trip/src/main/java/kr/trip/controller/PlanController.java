@@ -67,18 +67,32 @@ public class PlanController {
 
 	@GetMapping("/library")
 	public void getPlan(DateBetweenDTO day , ChoicePlaceDTO place, SleepNameDTO sleepName,String areaname, Model model) {
-		log.info("date값" + day);
-		log.info("place값" + place);
-		log.info("sleep값"+ sleepName );
+
 		
 
 		List<DateBetweenDTO> db = service.autoSplit(day);
 		List<ChoicePlaceDTO> cp = service.autoSplit2(place);
 		List<SleepNameDTO> sp = service.autoSplit3(sleepName);
 		
+		log.info("데이트값"+db);
+		log.info("선택한 장소 값"+cp);
+		log.info("선택한 숙소 값" + sp);
 	
+		int index = db.size();
+		int cindex = cp.size();
+		
+		int aindex = cindex / index;
+		int dindex = cindex % index;
 		model.addAttribute("area",service.getAreaContent(areaname));	
 		model.addAttribute("areaname", areaname);
+		model.addAttribute("date", db);
+		model.addAttribute("choice", cp);
+		model.addAttribute("sleep", sp);
+		model.addAttribute("index", index);
+		model.addAttribute("cindex" + cindex);
+		model.addAttribute("aindex" + aindex);// 몫
+		model.addAttribute("dindex" + dindex); //나머지
+		
 	}
 	
 	  

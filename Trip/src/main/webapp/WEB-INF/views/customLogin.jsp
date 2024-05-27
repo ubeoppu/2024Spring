@@ -40,15 +40,16 @@
 						</label>
 					</div>
 					<div>
-						<label for="agree">개인정보 수집, 이용 동의<strong>(필수)</strong></label> 
 					 	<input type="checkbox" name="agree" value="2" id="check_2">
+						<label for="agree">개인정보 수집, 이용 동의<strong>(필수)</strong>
+						</label> 
 					</div>
 					
 					<div>
+						
 						<input type="checkbox" name="agree" value="3" id="check_3"> 
-						<label for="agree">
-						 	<span>개인정보 이용 동의<strong>(필수)</strong></span>
-						</label> 
+						 	<label for="agree">개인정보 이용 동의<strong>(필수)</strong>
+						 	</label> 
 					</div>
 					
 					<div>
