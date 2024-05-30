@@ -11,6 +11,7 @@
 <body>
 	<div class="login-page">
 		<div class="form" id="customLogin">
+		
 			<form class="register-form" action="/member/register" method="post">
 			<label id="label1"></label>
 				<input type="text" name="member_email" id="id"
@@ -40,11 +41,11 @@
 						</label>
 					</div>
 					<div>
+					
 					 	<input type="checkbox" name="agree" value="2" id="check_2">
 						<label for="agree">개인정보 수집, 이용 동의<strong>(필수)</strong>
 						</label> 
 					</div>
-					
 					<div>
 						
 						<input type="checkbox" name="agree" value="3" id="check_3"> 
@@ -53,7 +54,8 @@
 					</div>
 					
 					<div>
-						 <input type="checkbox" name="agree" value="4"> 
+					
+						 <input type="checkbox" name="agree" value="4" id="check_4"> 
 						<label for="agree">이벤트, 혜택정보 수신동의<strong class="select_disable">(선택)</strong></label>
 					</div>
 				</div>
