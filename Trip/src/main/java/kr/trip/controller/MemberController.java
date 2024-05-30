@@ -49,20 +49,6 @@ public class MemberController {
 		return "/main";
 	}
 	
-	@GetMapping("/member/agree")
-	public void agree() {
-		
-	}
-	
-	
-	
-	@GetMapping("/member/register")
-	public void join() {
-		
-	}
-	
-	
-	
 	@PostMapping("/member/register")
 	@Transactional
 	public String join(MemberVO member, RedirectAttributes rttr) {
