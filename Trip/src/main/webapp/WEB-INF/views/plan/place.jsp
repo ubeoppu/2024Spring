@@ -22,75 +22,8 @@
     <link href="../resources/css/modal2.css" rel="stylesheet">
     <link href="../resources/css/calender.css" rel="stylesheet">
 <link href="../resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="../resources/css/place.css" rel="stylesheet">
 
-    <style>
-    
-    #place, #place2{
-    display:none;}
-    
-    #place {position:relative; padding-right:10px;}
-    
-    #place2 {position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
-    
-    #sleep{position:relative; padding-right:10px;}
-    
-    #sleep2{position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
-    
-    #sleep, #sleep2{
-    display:none;}
-    
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-      
-      input[type="text"] {
-    width: 100px; /* 원하는 너비 값으로 조정 */
-}
-
-/* 높이 조정 */
-input[type="text"] {
-    height: 30px; /* 원하는 높이 값으로 조정 */
-}
-
-#timeSet > li {
-display:inline-block;}
-
-.set{
-display:inline-block;}
-
-.timeSetter{
-display:inline-block;}
-
-ul ,li , ins {
-    text-decoration: none; /* 밑줄 제거 */
-    list-style-type: none;
-    /* 다른 스타일 적용 */
-}
-ul , li{
-width:80px;
-}
-li{
-display:inline-block;}
-
-#day{width:500px;}
-
-#timeInput{
-width:115px;
-}
-    </style>
-
-    
-    <!-- Custom styles for this template -->
   </head>
   <body>
 
@@ -181,11 +114,11 @@ width:115px;
     <h2>여행 기간을 선택해주세요</h2><hr />
     <!-- 달력 추가 -->
 <div id="app"></div>
-
 <!-- 달력 끝 -->
   </div>          
 </div>  
 </div>
+
 
 <!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End --><!-- 날짜 선택End -->
 <!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 -->
