@@ -86,22 +86,25 @@
 
 <div class="timeSetter">
 <h6>여행시간 상세설정</h6><label class="selectDayBtn" for="modal-toggle"><input type="text" class="totalTime" value="총시간" readonly="readonly" style="border: none; width:300px;"><br>  일정 수정하기</label> <br>
-<p class="set">일자</p>
-<ul class="timeset">
-<ins class="date2"></ins>
-</ul>
-<p class="set">요일</p>
-<ul class="timeset">
-<ins class="date3"></ins>
-</ul>
-<p class="set">시작시간</p>
-<ul class="timeset">
-<ins class="date4"></ins>
-</ul>
-<p class="set">종료시간</p>
-<ul class="timeset">
-<ins class="date5"></ins>
-</ul>
+<table class="dateAll">
+    <thead>
+        <tr>
+                <th class="dateColumn">일자</th>
+                <th class="dayColumn">요일</th>
+                <th class="startTimeColumn">시작시간</th>
+                <th class="endTimeColumn">종료시간</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="date2"><!-- 요일 데이터를 여기에 추가 --></td>
+            <td class="date3"><!-- 시작시간 데이터를 여기에 추가 --></td>
+            <td class="date4"><!-- 종료시간 데이터를 여기에 추가 --></td>
+            <td class="date5">
+        </tr>
+    </tbody>
+</table>
 <button class="timeSetBtn">시간 설정 완료</button>
 </div>
 </div>
@@ -920,7 +923,7 @@ function convertToHoursMinutes(totalMinutes) {
         	    
         	    var dateStr ="";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr += "<li><input type ='text' name ='day' value='" + datesBetween[i].date + "'></li>";
+        	    	dateStr += "<input type ='text' name ='date_day' value='" + datesBetween[i].date + "' readonly='readonly'>";
         	    }
         	    $(".date2").html(dateStr);
         	    
@@ -928,19 +931,19 @@ function convertToHoursMinutes(totalMinutes) {
         	    
         	    var dateStr2 = "";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr2 += "<li><input type='text' name='dayOfWeek' value='" + datesBetween[i].dayOfWeek + "'></li>";
+        	    	dateStr2 += "<input type='text' name='date_week' value='" + datesBetween[i].dayOfWeek + "' readonly='readonly'>";
         	    }
         	    $(".date3").html(dateStr2);
         	    
         	    var dateStr3 = "";
         	    for(var i = 0; i < datesBetween.length; i++){
-        	    	dateStr3 += "<li><input type = 'time' name='startTime' value='10:00' class='timeInputStart"+ i + "'></li>";
+        	    	dateStr3 += "<input type = 'time' name='startTime' value='10:00' class='timeInputStart"+ i + "'>";
         	    }
         	    $(".date4").html(dateStr3)
         	    
         	    	var dateStr4 = "";
             	    for(var i = 0; i < datesBetween.length; i++){
-            	    	dateStr4 += "<li><input type='time' name='endTime' value='22:00' class='timeInputEnd" + i + "'></li>";
+            	    	dateStr4 += "<input type='time' name='endTime' value='22:00' class='timeInputEnd" + i + "'>";
             	    }
             	$(".date5").html(dateStr4);
             	

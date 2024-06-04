@@ -26,14 +26,14 @@
         }
       }
       
-      input[type="text"] {
-    width: 100px; /* 원하는 너비 값으로 조정 */
+/*       input[type="text"] {
+    width: 100px; 원하는 너비 값으로 조정
 }
 
-/* 높이 조정 */
+높이 조정
 input[type="text"] {
-    height: 30px; /* 원하는 높이 값으로 조정 */
-}
+    height: 30px; 원하는 높이 값으로 조정
+} */
 
 #timeSet > li {
 display:inline-block;}
@@ -60,3 +60,65 @@ display:inline-block;}
 #timeInput{
 width:115px;
 }
+input[name=date_day]{
+	border:none;
+	readonly:readonly;
+	width:60px;
+	 outline: none;
+	 font-weight:bold;
+}
+
+input[name=date_week]{
+	border:none;
+	readonly:readonly;
+	width:28px;
+	 outline: none;
+}
+
+input[name=startTime]{
+	border:none;
+}
+
+input[name=endTime]{
+	border:none;
+}
+.dateAll{
+	width:100%;
+	table-layout: fixed; /* 테이블 레이아웃을 고정 */
+	text-align:center;
+}
+
+.dateAll th{
+	text-align:center;
+}
+.dateAll th.dateColumn{
+	width:55px;
+}
+.dateAll th.dayColumn{
+	width:40px;
+
+	}
+
+.dateAll th.startTimeColumn {
+            width: 80px; /* 시작시간 컬럼 너비 조절 */
+}
+.dateAll th.endTimeColumn {
+            width: 80px; /* 종료시간 컬럼 너비 조절 */
+   }
+
+.dateALL td.date2{
+}   
+   
+.dateAll td.date4{
+	width:90px;
+}
+
+.dateAll td.date3{
+	width:30px;
+	 word-wrap: break-word; /* 단어를 줄바꿈 */
+}
+
+.dateAll td.date5{
+width:90px;	
+}
+	
