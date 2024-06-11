@@ -82,7 +82,7 @@
 
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
 <h2 style="font-weight:bold;">${areaname }</h2>
-<h5 id="dateRange" style="font-weight:bold;"></h5>
+<h5 class="dateRange" style="font-weight:bold;"></h5>
 
 <div class="timeSetter">
 <h6>여행시간 상세설정</h6><label class="selectDayBtn" for="modal-toggle"><input type="text" class="totalTime" value="총시간" readonly="readonly" style="border: none; width:300px;"><br>  일정 수정하기</label> <br>
@@ -105,7 +105,7 @@
         </tr>
     </tbody>
 </table>
-<button class="timeSetBtn">시간 설정 완료</button>
+<button type="button" class="timeSetBtn">시간 설정 완료</button>
 </div>
 </div>
 <div class="modal-container">
@@ -127,36 +127,11 @@
 <!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 --><!-- 장소 선택 -->
 <div id ="place">
   <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
-      <span class="fs-5 fw-semibold">${areaname }</span>
+      <h2 style="font-weight:bold;">${areaname }</h2>
+<h5 class="dateRange" style="font-weight:bold;"></h5>
+<span class="fs-5 fw-semibold">장소 선택</span>
                   <input type="hidden" id="lat" name="lat" value="${area.lat}">
             <input type="hidden" id="lng" name="lng"  value="${area.lng}">
-      <div class="pac-card" id="pac-controls">
-         <div>
-            <div id="title">
-               Autocomplete search
-            </div>
-            <div id="type-selector" class="pac-controls" style="backgroundcolor:skyblue;">
-               <input type="radio" name="type" id="changetype-all" checked="checked">
-               <label for="changetype-all">All</label>
-               
-               <input type="radio" name="type" id="changetype-establishment">
-               <label for="changetype-establishment">Establishments</label>
-
-               <input type="radio" name="type" id="changetype-address">
-               <label for="changetype-address">Addresses</label>
-
-               <input type="radio" name="type" id="changetype-geocode">
-               <label for="changetype-geocode">Geocodes</label>
-            </div>
-            <div id="strict-bounds-selector" class="pac-controls">
-               <input type="checkbox" id="use-strict-bounds" value="">
-               <label for="use-strict-bounds">Strict Bounds</label>
-            </div>
-         </div>
-         <div id="pac-container">
-            <input id="pac-input" type="text" placeholder="Enter a location">
-         </div>
-      </div>
       <div id="map"></div>
       <div id="infowindow-content">
          <img src="" width="16" height="16" id="plage-icon">
@@ -194,35 +169,11 @@
   <!-- 숙소 선택 --><!-- 숙소 선택 --><!-- 숙소 선택 --><!-- 숙소 선택 --><!-- 숙소 선택 --><!-- 숙소 선택 -->
   <div id="sleep">
     <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
+    <h2 style="font-weight:bold;">${areaname }</h2>
+<h5 class="dateRange" style="font-weight:bold;"></h5>
       <span class="fs-5 fw-semibold">숙소 선택</span>
       
-      <div class="pac-card" id="pac-controls">
-         <div>
-            <div id="title">
-               Autocomplete search
-            </div>
-            <div id="type-selector" class="pac-controls" style="backgroundcolor:skyblue;">
-               <input type="radio" name="type" id="changetype-all" checked="checked">
-               <label for="changetype-all">All</label>
-               
-               <input type="radio" name="type" id="changetype-establishment">
-               <label for="changetype-establishment">Establishments</label>
 
-               <input type="radio" name="type" id="changetype-address">
-               <label for="changetype-address">Addresses</label>
-
-               <input type="radio" name="type" id="changetype-geocode">
-               <label for="changetype-geocode">Geocodes</label>
-            </div>
-            <div id="strict-bounds-selector" class="pac-controls">
-               <input type="checkbox" id="use-strict-bounds" value="">
-               <label for="use-strict-bounds">Strict Bounds</label>
-            </div>
-         </div>
-         <div id="pac-container">
-            <input id="pac-input" type="text" placeholder="Enter a location">
-         </div>
-      </div>
       <div id="map"></div>
       <div id="infowindow-content">
          <img src="" width="16" height="16" id="plage-icon">
@@ -978,7 +929,7 @@ function convertToHoursMinutes(totalMinutes) {
         	    
         	    $("#daysdiff").text("총 숙박 날" + daysDiff + "일");
         	    
-        	    $("#dateRange").text(startDateFormatted + " ~ " + endDateFormatted);
+        	    $(".dateRange").text(startDateFormatted + " ~ " + endDateFormatted);
         	    console.log('이쪽까지 동작을 안하나요')
         	    $('#modal-toggle').prop('checked', false);
          })
@@ -1109,14 +1060,22 @@ function convertToHoursMinutes(totalMinutes) {
         	 let placesForm = $("#places"); 
         	 
         	 placesForm.submit();
-        	 
-        	
-         
-         
- 
-         
-         
   
+   })
+   
+   $(".timeSetBtn").on("click", function(){
+	   var dayElement = document.getElementById("day");
+       var placeElement = document.getElementById("place");
+       var placeElement2 = document.getElementById("place2");
+       var sleepElement = document.getElementById("sleep");
+       var sleepElement2 = document.getElementById("sleep2");
+
+       dayElement.style.display ="none";
+       placeElement.style.display = "block";
+       placeElement2.style.display = "block"; 
+       sleepElement.style.display = "none";
+       sleepElement2.style.display = "none";
+	   
    })
    
    })
