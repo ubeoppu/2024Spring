@@ -3,11 +3,11 @@
     
     #place {position:relative; padding-right:10px;}
     
-    #place2 {position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
+    #place2 {position:absolute; right:-81%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
     
     #sleep{position:relative; padding-right:10px;}
     
-    #sleep2{position:absolute; right:-89%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
+    #sleep2{position:absolute; right:-81%; top:0; z-index:10; height:100%; border-left:1px solid #ddd;}
     
     #sleep, #sleep2{
     display:none;}
@@ -42,7 +42,10 @@ display:inline-block;}
 display:inline-block;}
 
 .timeSetter{
-display:inline-block;}
+display:inline-block;
+font-size: 17px;
+line-height: 2rem;
+}
 
 ul ,li , ins {
     text-decoration: none; /* 밑줄 제거 */
@@ -50,10 +53,13 @@ ul ,li , ins {
     /* 다른 스타일 적용 */
 }
 ul , li{
-width:80px;
+width:105px;
 }
 li{
-display:inline-block;}
+display:inline-block;
+margin-bottom:50px;
+font-size: 17px;
+}
 
 #day{width:500px;}
 
@@ -77,10 +83,12 @@ input[name=date_week]{
 
 input[name=startTime]{
 	border:none;
+	margin-bottom: 2px;
 }
 
 input[name=endTime]{
 	border:none;
+	margin-bottom: 2px;
 }
 .dateAll{
 	width:100%;
@@ -90,6 +98,7 @@ input[name=endTime]{
 
 .dateAll th{
 	text-align:center;
+	background-color:#EAEAEA;
 }
 .dateAll th.dateColumn{
 	width:55px;
@@ -121,4 +130,69 @@ input[name=endTime]{
 .dateAll td.date5{
 width:90px;	
 }
+
+#day{
+	padding:25px;
+}
+
+#place{
+	padding:25px;
+}
+
+#sleep{
+	padding:25px;
+}
+
+.d-flex flex-column flex-shrink-0 bg-light{
+	            border: none; /* 테두리 제거 */
+            outline: none; /* 포커스 시 외곽선 제거 */
+}
+
+
+.timeSetBtn{
+	margin-top:15px;
+	border-radius: 5px;
+    background-color: black;
+    font-weight: bold;
+    color: white;
+    width: 145px;
+    font-size: 15px;
+    height: 50px;
+}
+
+.step1{
+	color:rgb(80 212 229);
+	font-weight:bold;
+	margin-left:5px;
+	text-decoration: none;
+}
+
+.step2, .step3{
+	color:#D5D5D5;
+		font-weight:bold;
+	margin-left:5px;
+	text-decoration: none;
+}
+
+.objsubmit{
+    margin-top: 15px;
+    position: absolute;
+    border-radius: 5px;
+    background-color: black;
+    font-weight: bold;
+    color: white;
+    width: 88px;
+    font-size: 15px;
+    height: 65px;
+    top: 900px;
+    left: 8px;
+}
+       
+#sideIcon{
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 1px;
+    top: 2px;
+        }
 	

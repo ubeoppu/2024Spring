@@ -78,7 +78,7 @@ body {
 }
 
 /* 테이블 셀 */
-td {
+.calendar td {
   padding: 0;
   line-height: 1rem;
 }

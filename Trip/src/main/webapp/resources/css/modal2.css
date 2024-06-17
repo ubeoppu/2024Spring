@@ -102,9 +102,9 @@
       opacity: 1;
       background-color: #fff;
       max-width: 1100px;
-      width: 1100px;
+      width: 900px;
       margin-top:-40px;
-      height: 900px;
+      height: 850px;
       padding: 58px;
       position: fixed;
       left: calc(50% - 550px);
@@ -116,6 +116,16 @@
       visibility: visible;      
       box-shadow: 0 3px 7px rgba(0, 0, 0, 0.6);  
       @media (max-width: 400px) { left: 0; }                   
-    }  
+    }
+    
+   .calendar #selectDay{
+        border-radius: 5px;
+    background-color: black;
+    font-weight: bold;
+    color: white;
+    width: 145px;
+    font-size: 15px;
+    height: 50px;
+    } 
   }
 }
