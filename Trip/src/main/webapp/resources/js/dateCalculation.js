@@ -97,12 +97,13 @@ function convertToHoursMinutes(totalMinutes) {
 
    function updateHtml() {
          var str = "";
+             str += "<div class='list-group list-group-flush border-bottom scrollarea' >";
          for (var i = 0; i < list.length; i++) {
              str += "<div class='contentItem'>";
-             str += "<input name='c_number' value='" + (i + 1) + "' style='width:20px; background-color:skyblue;'>";
-             str += "<input name='contentName"  + "' value='" + list[i].content_id + "' style='border:none;'>";
-             str += "<input name='contentTypes" + "' value='" + list[i].contentType + "' style='border:none;'>";
-             str += "<input name='address"  + "' value='" + list[i].addr2 + "' style='border:none;'>";
+             str += "<input name='c_number' class='cNum' value='" + (i + 1) + "'>";
+             str += "<input name='contentName' class='contentTitle'"  + "value='" + list[i].content_id + "'>";
+             str += "<input name='contentTypes' class='contentT'" + "value='" + list[i].contentType + "'>";
+             str += "<input name='address' class='contentAddr'"  + "value='" + list[i].addr2 + "'>";
              console.log('playTime값 2번 체크' + list[i].playTime)
              if(totalRunTimes[i] === "" || totalRunTimes[i] === null || totalRunTimes[i] === undefined){
                  console.log('트루문 찍힘')
@@ -111,8 +112,10 @@ function convertToHoursMinutes(totalMinutes) {
                  console.log('false문 찍힘')
              str += "<input type='text' name='playTime' pattern=''\d{2}:\d{2}' placeholder='HH:MM' value='"+ totalRunTimes[i] +"' title='올바른 형식으로 입력하세요 (HH:MM)' class='contentTime'>";}
              str += "<button class='deleteBtn' data-index='" + i + "'>삭제</button>";
+             str += "<hr>";
              str += "</div>";	
          }
+             str += "</div>";
          $(".chooseContent").html(str);
          console.log('list길이값' + list.length)
      }
@@ -346,7 +349,7 @@ function convertToHoursMinutes(totalMinutes) {
  console.log("총합 시간 (조정): " + totalHour);
  console.log("총합 분 (조정): " + totalMinute);
  
- $(".totalTime").val("총시간 " + totalHour + "시간 " + totalMinute + "분 입니다.");  
+ $(".totalTime").val("총" + totalHour + "시간" + totalMinute + "분");  
  
  
  
@@ -377,18 +380,18 @@ function convertToHoursMinutes(totalMinutes) {
               console.log('되겠죠'+ q)
               console.log("안찍혀 이게?")
               str += "<div class='sleepItem'>";
-              str += q + " " + datesBetween[i].date + "("+ datesBetween[i].dayOfWeek +")~" + datesBetween[q].date + "("+ datesBetween[q].dayOfWeek +")";
+              str += "<span id='sleepDayCount'>"+ q + "</span> <input type='text'class='dateRan' value='" + datesBetween[i].date + "("+ datesBetween[i].dayOfWeek +")~" + datesBetween[q].date + "("+ datesBetween[q].dayOfWeek +")'>";
               if(sleepName[i] === undefined || sleepName[i].content_id === undefined){
                   console.log('true문 통과')
-                  str += "<input type ='text' value='숙소를 추가해주세요.'>"	 
+                  str += "<input type ='text' class='sleepVal' value='숙소를 추가해주세요.'>"	 
               }else{
-              str += "<input type ='text' name='sleepName' value='"+ sleepName[i].content_id +"'>"}
-              str += "<button class ='deleteBtn2'>삭제</button></div>"
-              
+              str += "<input type ='text' class='sleepValC' name='sleepName' value='"+ sleepName[i].content_id +"'>"
+         }
+              str += "</div>";
           }$(".chooseSleep").html(str);
       }
      
-      $(".chooseSleep").on("click", ".deleteBtn2", function(){
+      $(".deleteBtn2").on("click",function(){
           console.log('숙소 삭제')
          sleepName = [];
          updateSleep();

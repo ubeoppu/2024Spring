@@ -83,7 +83,7 @@ main {
 
 .scrollarea {
   overflow-y: auto;
-  height:1100px;
+    height: 1000px;
 }
 
 .fw-semibold { font-weight: 600; }

@@ -72,10 +72,10 @@
 <h5 class="dateRange" style="font-weight:bold;"></h5>
 
 <div class="timeSetter">
-<h6>여행시간 상세설정</h6>
+<input type="text" class="dayComment" value="여행시간 상세설정">
+<input type="text" class="totalTime" value="" readonly="readonly">
 <label class="selectDayBtn" for="modal-toggle">
-<input type="text" class="totalTime" value="여행 총시간" readonly="readonly" style="border: none; width:300px;"><br> 
-일정 수정하기</label> <br>
+여행기간 수정</label> <br>
 <table class="dateAll">
     <thead>
         <tr>
@@ -120,6 +120,16 @@
       <h2 style="font-weight:bold;">${areaname }</h2>
 <h5 class="dateRange" style="font-weight:bold;"></h5>
 <span class="fs-5 fw-semibold">장소 선택</span>
+<div>
+<label class="choosePlace">전체
+<input type="radio" name="radio" value="전체"></label>
+<label class="choosePlace">명소
+<input type="radio"  name="radio" value="명소"></label>
+<label class="choosePlace">식당
+<input type="radio" name="radio" value="식당"></label>
+<label class="choosePlace">카페
+<input type="radio" name="radio" value="카페"></label>
+</div>
                   <input type="hidden" id="lat" name="lat" value="${area.lat}">
             <input type="hidden" id="lng" name="lng"  value="${area.lng}">
       <div id="map"></div>
@@ -130,24 +140,22 @@
       </div>
       <div class="list-group list-group-flush border-bottom scrollarea" >
       <c:forEach var="content" items="${list}">
-         <div class="d-flex w-100 align-items-center justify-content-between">
-         <hr>
-         <b><button class="contentNameBtn" style="width:100px;" data-content-id="${content.content_id}">${content.content_id}</button></b>
+         <c:if test="${content.contentType != '숙소'}">
+         <div>
+         <b><button class="contentNameBtn" data-content-id="${content.content_id}">${content.content_id}</button></b>
          <input class="contentType" type="text" data-content-type="${content.contentType}" value="${content.contentType}" readonly="readonly">
         <br><input id="addr2" class="contentAdd" type="text" data-content-addr2="${content.addr2}" value="${content.addr2}" readonly="readonly">
          <button type="button" id="checkBtn" class="checkBtn" >+</button>
          <hr>
       </div>
+         </c:if>
       </c:forEach>
       </div>
   </div>
   
   <div id="place2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      <svg class="bi me-2" 
-      width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
-      <span id="totalRunTime"></span>
-    </a>
+      <span id="totalRunTime"><br><br><br>0시간 0분 / 0시간 0분</span>
+      <hr>
          <div class="chooseContent" style="border:1px;">
          </div>
   </div>
@@ -172,10 +180,9 @@
       </div>
       <div class="list-group list-group-flush border-bottom scrollarea" >
       <c:forEach var="content" items="${sleep}">
-         <div class="d-flex w-100 align-items-center justify-content-between">
-         <hr>
+         <div>
          <c:if test="${content.contentType == '숙소'}">
-         <b><button class="contentNameBtn" style="width:100px;" data-content-id="${content.content_id}">${content.content_id}</button></b>
+         <b><button class="contentNameBtn"  data-content-id="${content.content_id}">${content.content_id}</button></b>
          <input class="contentType" type="text" data-content-type="${content.contentType}" value="${content.contentType}" readonly="readonly">
         <br><input id="addr2" class="contentAdd" type="text" data-content-addr2="${content.addr2}" value="${content.addr2}" readonly="readonly">
          <button type="button" class="checkInBtn" class="checkInBtn" >+</button>
@@ -186,11 +193,14 @@
       </div>
   </div>
   <div id="sleep2" class="flex-shrink-0 p-3 bg-white" style="width: 350px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-      <svg class="bi me-2" width="30" height="24" style="margin-top:15px;"><use xlink:href="#bootstrap"/></svg>
-      <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 선택 </span>
-      <span class="fs-5 fw-semibold" id="daysdiff" style="margin-top:5px; padding-top:10px;"></span>
-    </a>
+  <div class="sleepHead">
+      <span class="fs-5 fw-semibold" style="margin-top:5px; padding-top:10px;">숙소 </span>
+      <span class="fs-5 fw-semibold"  id="daysdiff" style="margin-top:5px; padding-top:10px;"></span>
+      <button type="button"class ="deleteBtn2">초기화</button>
+      <br>
+      <br>
+      <hr>
+      </div>
          <div class="chooseSleep" style="border:1px;">
          </div>
   </div>
